@@ -4,6 +4,7 @@ import {
   type CatalogCommand,
   type RepoManifest,
 } from "@repo-harness/schemas";
+import { loadConfig, type LoadedConfig } from "./config";
 import { detectEnv } from "./detect/env";
 import { detectJs } from "./detect/js";
 import { detectLanguages } from "./detect/languages";
@@ -12,12 +13,14 @@ import { detectPython } from "./detect/python";
 import type { StackDetection } from "./detect/types";
 import { buildFileIndex, type FileIndex } from "./fsindex";
 import { gitCommitCount } from "./gitinfo";
+import { computeInputsHash } from "./hash";
 import { HARNESS_VERSION } from "./version";
 
 export interface ScanOptions {
   /** Injected clock so identical repo state → identical manifest (determinism guarantee). */
   now?: Date;
-  excludes?: string[];
+  /** Pre-loaded config (avoids a double read when the caller already has it). */
+  loaded?: LoadedConfig;
 }
 
 /** Earlier detections win: package scripts beat pyproject beat Makefile, per kind. */
@@ -42,18 +45,25 @@ function firstNonNull<T>(items: Array<T | null>): T | null {
 }
 
 export async function scan(root: string, opts: ScanOptions = {}): Promise<RepoManifest> {
-  const index: FileIndex = await buildFileIndex(root, { excludes: opts.excludes });
+  const { config, raw: configRaw } = opts.loaded ?? loadConfig(root);
+  const index: FileIndex = await buildFileIndex(root, { excludes: config.excludes });
   const warnings = index.warnings;
 
   const detections = [detectJs(index, warnings), detectPython(index, warnings), detectMake(index)];
   const gitCommits = await gitCommitCount(root);
+
+  let commands = mergeCommands(detections);
+  for (const override of config.commandOverrides) {
+    commands = commands.filter((c) => c.kind !== override.kind || c.kind === "custom");
+    commands.push({ ...override, provenance: "user" });
+  }
 
   return {
     schemaVersion: SCHEMA_VERSION,
     harnessVersion: HARNESS_VERSION,
     root: ".",
     scannedAt: (opts.now ?? new Date()).toISOString(),
-    inputsHash: "",
+    inputsHash: computeInputsHash(index, configRaw),
     stack: {
       languages: detectLanguages(index),
       frameworks: detections.flatMap((d) => d.frameworks),
@@ -62,7 +72,7 @@ export async function scan(root: string, opts: ScanOptions = {}): Promise<RepoMa
       monorepo: firstNonNull(detections.map((d) => d.monorepo)),
     },
     commands: {
-      commands: mergeCommands(detections),
+      commands,
       verifyOrder: DEFAULT_VERIFY_ORDER,
     },
     env: detectEnv(index),
