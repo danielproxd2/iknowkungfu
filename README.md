@@ -1,5 +1,10 @@
 # Repo Harness
 
+[![npm](https://img.shields.io/npm/v/repo-harness-cli)](https://www.npmjs.com/package/repo-harness-cli)
+[![CI](https://github.com/danielproxd2/repo-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/danielproxd2/repo-harness/actions/workflows/ci.yml)
+[![node >= 20](https://img.shields.io/node/v/repo-harness-cli)](https://www.npmjs.com/package/repo-harness-cli)
+[![license MIT](https://img.shields.io/npm/l/repo-harness-cli)](LICENSE)
+
 **Make any repo AI-ready. Make weak models act like strong ones.**
 
 Repo Harness scans your repository and precomputes what coding agents otherwise get wrong: an accurate project map, the *exact* build/test/lint commands, verification workflows, and risk guardrails — then exposes them to every agentic tool you use (Claude Code, Codex, Cursor, Copilot, anything MCP) from a single source of truth.
@@ -70,6 +75,14 @@ Declare your risk areas in `.repo-harness/config.json` (init asks once) — it's
 ```json
 { "riskAreas": [{ "id": "payments", "paths": ["src/lib/payments/**"], "reason": "money movement", "rules": [{ "kind": "tests-first" }] }] }
 ```
+
+## Documentation
+
+- [CLI reference](docs/CLI.md) — every command, option, exit code, JSON mode, CI wiring
+- [MCP server](docs/MCP.md) — registration per client and all nine tools
+- [Configuration & artifacts](docs/CONFIGURATION.md) — `config.json`, risk areas, marker blocks, provenance
+- [DEMO.md](DEMO.md) — the full loop with real captured output
+- [CHANGELOG.md](CHANGELOG.md)
 
 ## Supported today (v1.0)
 
