@@ -9,7 +9,7 @@ Local-first. Model-agnostic. **Works with zero API keys.**
 ```
 $ npx repo-harness-cli init
 
-Repo Harness v0.1.0 — init
+Repo Harness v1.0.0 — init
 ✔ Detected: nextjs@15.1.0 · react@19.0.0 · vitest@2.1.0 · playwright@1.48.0 · TypeScript 96% · pnpm@9.6.0 · node>=20
 ✔ Command catalog: 9 detected, 2 inferred
 ✔ Mapped 16 files · 3 entrypoints
@@ -71,7 +71,7 @@ Declare your risk areas in `.repo-harness/config.json` (init asks once) — it's
 { "riskAreas": [{ "id": "payments", "paths": ["src/lib/payments/**"], "reason": "money movement", "rules": [{ "kind": "tests-first" }] }] }
 ```
 
-## Supported today (v0.1)
+## Supported today (v1.0)
 
 - **Stacks:** TypeScript/JavaScript (npm/pnpm/yarn/bun; Next.js, Vite, Express/Fastify/Hono; vitest/jest/playwright) · Python (pyproject/requirements; Django, FastAPI, Flask; pytest). Other stacks degrade gracefully (file map, git stats, Makefile/justfile commands).
 - **Adapters:** AGENTS.md · Claude Code · Codex skills · Cursor rules · GitHub Copilot instructions.
@@ -79,8 +79,8 @@ Declare your risk areas in `.repo-harness/config.json` (init asks once) — it's
 
 ## Roadmap
 
-- v0.2 — Go, Rust, Java detection · tree-sitter WASM import graphs · `audit --deep` (execute catalog commands to prove liveness) · optional LLM enrichment (`--enrich`, any provider or shell command)
-- v0.3 — monorepo-aware per-package catalogs · JetBrains/Windsurf adapters · HTTP MCP transport
+- v1.1 — Go, Rust, Java detection · tree-sitter WASM import graphs · `audit --deep` (execute catalog commands to prove liveness) · optional LLM enrichment (`--enrich`, any provider or shell command)
+- v1.2 — monorepo-aware per-package catalogs · JetBrains/Windsurf adapters · HTTP MCP transport
 - Later — semgrep/ESLint ingestion into risk rules · PR-review adapter (harness context in CI review bots)
 
 ## Contributing

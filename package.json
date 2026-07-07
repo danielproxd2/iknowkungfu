@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "pnpm --filter repo-harness build",
+    "build": "pnpm --filter repo-harness-cli build",
     "typecheck": "tsc --noEmit",
     "test": "pnpm build && vitest run",
     "test:unit": "vitest run"

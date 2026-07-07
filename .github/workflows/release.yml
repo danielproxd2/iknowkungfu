@@ -24,7 +24,24 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: node scripts/pack-smoke.mjs
+      - name: Check tag matches version and whether it is already published
+        id: check
+        working-directory: packages/cli
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="${GITHUB_REF_NAME#v}"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "tag v$TAG does not match package version $VERSION" >&2
+            exit 1
+          fi
+          if npm view "repo-harness-cli@$VERSION" version >/dev/null 2>&1; then
+            echo "repo-harness-cli@$VERSION already on the registry — skipping publish"
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
       - run: npm publish --provenance --access public
+        if: steps.check.outputs.published == 'false'
         working-directory: packages/cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

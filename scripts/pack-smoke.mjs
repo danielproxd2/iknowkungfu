@@ -29,7 +29,7 @@ try {
     shell: process.platform === "win32",
   });
 
-  const bin = path.join(install, "node_modules", "repo-harness", "dist", "index.js");
+  const bin = path.join(install, "node_modules", "repo-harness-cli", "dist", "index.js");
   for (const [dir, expect] of [
     ["nextjs", "pnpm@9.6.0"],
     ["fastapi", "poetry"],
