@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 — 2026-07-07
+
+- **Fix:** `verify` now kills the entire process tree when a command hits its timeout. Previously only the wrapping shell was killed, so on Linux and Windows a hung command survived, held the output pipes, and `verify` hung with it (macOS was unaffected). POSIX commands now run in their own process group and the group gets SIGKILL; Windows uses `taskkill /T /F`.
+- CI: monorepo dev loop tested on Node 22/24 (pnpm 11 requires ≥ 22.13); the published CLI's Node 20 support is covered by a dedicated packed-tarball smoke job.
+
 ## 1.0.0 — 2026-07-07
 
 First public release, published to npm as **`repo-harness-cli`** (the name `repo-harness` was already taken on the registry; the installed commands are still `repo-harness` and `rh`).

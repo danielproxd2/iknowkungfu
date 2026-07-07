@@ -9,7 +9,7 @@ Local-first. Model-agnostic. **Works with zero API keys.**
 ```
 $ npx repo-harness-cli init
 
-Repo Harness v1.0.0 — init
+Repo Harness v1.0.1 — init
 ✔ Detected: nextjs@15.1.0 · react@19.0.0 · vitest@2.1.0 · playwright@1.48.0 · TypeScript 96% · pnpm@9.6.0 · node>=20
 ✔ Command catalog: 9 detected, 2 inferred
 ✔ Mapped 16 files · 3 entrypoints

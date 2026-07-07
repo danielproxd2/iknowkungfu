@@ -6,7 +6,7 @@ Every output below is real, captured by running the built binary against `fixtur
 ## 1. `repo-harness init --yes`
 
 ```
-Repo Harness v1.0.0 — init
+Repo Harness v1.0.1 — init
 ✔ Detected: vitest@2.0.0 · JavaScript 100% · node
 ✔ Command catalog: 4 detected, 1 inferred
 ✔ Mapped 6 files · 3 entrypoints
