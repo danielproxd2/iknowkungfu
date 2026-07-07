@@ -20,30 +20,39 @@ async function runOne(command: string, cwd: string, opts: RunVerifyOptions): Pro
   const started = Date.now();
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const win32 = process.platform === "win32";
+  // execa's own timeout kills only the shell; the actual command is often a
+  // grandchild that survives, keeps the stdio pipes open, and hangs the await
+  // (observed on Linux and Windows). Kill the whole tree ourselves instead:
+  // POSIX gets its own process group (detached) killed by -pid, Windows uses
+  // taskkill /T.
   const subprocess = execaCommand(command, {
     cwd,
     shell: true,
     all: true,
     reject: false,
-    // On Windows, killing the shell leaves grandchildren alive holding the
-    // stdio pipes, so execa's own timeout never resolves; tree-kill instead.
-    ...(win32 ? {} : { timeout: timeoutMs }),
+    detached: !win32,
     env: { FORCE_COLOR: "0" },
   });
-  let winTimedOut = false;
-  const winTimer = win32
-    ? setTimeout(() => {
-        winTimedOut = true;
-        void execa("taskkill", ["/pid", String(subprocess.pid), "/t", "/f"], { reject: false });
-      }, timeoutMs)
-    : undefined;
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    if (win32) {
+      void execa("taskkill", ["/pid", String(subprocess.pid), "/t", "/f"], { reject: false });
+    } else {
+      try {
+        process.kill(-(subprocess.pid as number), "SIGKILL");
+      } catch {
+        subprocess.kill("SIGKILL");
+      }
+    }
+  }, timeoutMs);
   const result = await subprocess;
-  if (winTimer) clearTimeout(winTimer);
+  clearTimeout(timer);
   const output = result.all ?? "";
   if (opts.onOutput && output.length > 0) opts.onOutput(`${output}\n`);
 
   let status: CommandRunResult["status"];
-  if (result.timedOut || winTimedOut) status = "timeout";
+  if (result.timedOut || timedOut) status = "timeout";
   else if (result.exitCode === 127 || /command not found|not recognized as an internal/i.test(output) || result.failed && result.exitCode === undefined)
     status = "not-found";
   else status = result.exitCode === 0 ? "pass" : "fail";
