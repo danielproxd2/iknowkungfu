@@ -11,8 +11,8 @@ describe("repo-harness scan (built binary)", () => {
     expect(manifest.commands.commands.length).toBeGreaterThan(5);
   });
 
-  it("scan prints a human summary by default", async () => {
-    const res = await runCli(["scan", "--cwd", fixture("nextjs-pnpm")]);
+  it("scan prints a human summary by default (dry-run keeps the fixture pristine)", async () => {
+    const res = await runCli(["scan", "--dry-run", "--cwd", fixture("nextjs-pnpm")]);
     expect(res.code).toBe(0);
     expect(res.stdout).toContain("Repo Harness");
     expect(res.stdout).toContain("pnpm test");

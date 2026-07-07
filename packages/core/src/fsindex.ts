@@ -18,6 +18,7 @@ const DEFAULT_EXCLUDES = [
   "**/target/**",
   "**/.turbo/**",
   "**/.pytest_cache/**",
+  "**/.repo-harness/**",
 ];
 
 const MAX_FILES = 200_000;
