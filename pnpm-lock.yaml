@@ -18,6 +18,15 @@ importers:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@24.13.2)(vite@8.1.3(@types/node@24.13.2))
 
+  packages/adapters:
+    dependencies:
+      '@repo-harness/core':
+        specifier: workspace:*
+        version: link:../core
+      '@repo-harness/schemas':
+        specifier: workspace:*
+        version: link:../schemas
+
   packages/cli:
     dependencies:
       commander:
@@ -39,6 +48,9 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
+      '@repo-harness/adapters':
+        specifier: workspace:*
+        version: link:../adapters
       '@repo-harness/core':
         specifier: workspace:*
         version: link:../core

@@ -26,6 +26,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@repo-harness/adapters": "workspace:*",
     "@repo-harness/core": "workspace:*",
     "@repo-harness/schemas": "workspace:*",
     "tsdown": "^0.22.3"

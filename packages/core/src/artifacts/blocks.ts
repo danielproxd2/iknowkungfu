@@ -14,8 +14,14 @@ export interface GeneratedArtifact {
   /** Repo-relative target path. */
   path: string;
   blocks: ArtifactBlock[];
-  /** managed-file: harness owns the whole file. managed-blocks: only marker blocks (file may hold user content). */
-  ownership: "managed-file" | "managed-blocks";
+  /**
+   * managed-file: harness owns the whole file (header + blocks).
+   * managed-blocks: only marker blocks; surrounding user content is sacred.
+   * owned-verbatim: exact content, no markers — for files needing frontmatter on line 1 (SKILL.md, .mdc).
+   */
+  ownership: "managed-file" | "managed-blocks" | "owned-verbatim";
+  /** Required for owned-verbatim. */
+  verbatim?: string;
   lineBudget: number;
   warnings: string[];
 }
@@ -85,6 +91,7 @@ function freshRender(artifact: GeneratedArtifact, manifestHash: string): string 
  * Throws BlockCorruptionError on unbalanced markers — callers surface path + fix.
  */
 export function mergeArtifact(existing: string | null, artifact: GeneratedArtifact, manifestHash: string): string {
+  if (artifact.ownership === "owned-verbatim") return artifact.verbatim ?? "";
   if (existing === null) return freshRender(artifact, manifestHash);
   const segments = parseSegments(artifact.path, existing);
   const wanted = new Map(artifact.blocks.map((b) => [b.id, b]));
@@ -115,8 +122,25 @@ export function mergeArtifact(existing: string | null, artifact: GeneratedArtifa
   return joined;
 }
 
+/** Remove one rh block from a file; returns null when nothing meaningful remains. */
+export function removeBlock(path: string, content: string, id: string): string | null {
+  const segments = parseSegments(path, content);
+  const kept: string[] = [];
+  for (const seg of segments) {
+    if (seg.kind === "block") {
+      if (seg.id === id) continue;
+      kept.push(renderBlock({ id: seg.id, inputs: seg.inputs, content: seg.lines.join("\n") }));
+    } else {
+      kept.push(seg.lines.filter((l) => !HEADER_RE.test(l)).join("\n"));
+    }
+  }
+  const joined = kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  return joined === "" ? null : `${joined}\n`;
+}
+
 /** Which block ids would be rewritten (used by refresh --check and reporting). */
 export function staleBlockIds(existing: string | null, artifact: GeneratedArtifact): string[] {
+  if (artifact.ownership === "owned-verbatim") return existing === (artifact.verbatim ?? "") ? [] : ["content"];
   if (existing === null) return artifact.blocks.map((b) => b.id);
   let segments: Segment[];
   try {
