@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@repo-harness/core";
+import { registerGenerate } from "./commands/generate";
 import { registerScan } from "./commands/scan";
 
 const program = new Command("repo-harness")
@@ -12,6 +13,7 @@ const program = new Command("repo-harness")
   .option("--cwd <path>", "run as if started in <path>");
 
 registerScan(program);
+registerGenerate(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   const json = process.argv.includes("--json");
