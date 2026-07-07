@@ -24,13 +24,13 @@ describe("scan persistence", () => {
 
     const first = await runCli(["scan", "--cwd", repo]);
     expect(first.code).toBe(0);
-    expect(first.stdout).toContain("manifest written");
+    expect(first.stdout).toContain("written: .repo-harness/manifest.json");
     const bytes = readFileSync(manifestPath, "utf8");
     parseManifest(JSON.parse(bytes));
 
     const second = await runCli(["scan", "--cwd", repo]);
     expect(second.code).toBe(0);
-    expect(second.stdout).toContain("manifest up to date");
+    expect(second.stdout).toContain("up to date: .repo-harness/manifest.json");
     expect(readFileSync(manifestPath, "utf8")).toBe(bytes);
   });
 
@@ -52,7 +52,7 @@ describe("scan persistence", () => {
     };
     writeFileSync(path.join(repo, "package.json"), '{"name":"acme-shop","scripts":{"test":"vitest run"}}\n');
     const res = await runCli(["scan", "--cwd", repo]);
-    expect(res.stdout).toContain("manifest written");
+    expect(res.stdout).toContain("written: .repo-harness/manifest.json");
     const after = JSON.parse(readFileSync(path.join(repo, ".repo-harness/manifest.json"), "utf8")) as {
       inputsHash: string;
     };

@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { catalogCommandSchema, provenanceSchema } from "./index";
+import { provenanceSchema } from "./base";
+import { catalogCommandSchema } from "./manifest";
 
 export const clientSchema = z.enum(["agents-md", "claude", "codex", "cursor", "copilot"]);
 export type Client = z.infer<typeof clientSchema>;
@@ -39,7 +40,7 @@ export const harnessConfigSchema = z.object({
   diffLimits: diffLimitsSchema.prefault({}),
   /** User-declared commands; replace detected ones of the same kind (provenance forced to "user"). */
   commandOverrides: z.array(catalogCommandSchema.omit({ provenance: true })).default([]),
-  mapMaxFiles: z.number().int().positive().default(5000),
+  mapMaxFiles: z.number().int().positive().default(20_000),
 });
 export type HarnessConfig = z.infer<typeof harnessConfigSchema>;
 

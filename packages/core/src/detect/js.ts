@@ -47,9 +47,14 @@ const LOCKFILES: Array<[file: string, pm: string]> = [
   ["package-lock.json", "npm"],
 ];
 
-type Pm = "npm" | "pnpm" | "yarn" | "bun";
+export type Pm = "npm" | "pnpm" | "yarn" | "bun";
 
-function runScript(pm: Pm, script: string): string {
+export function pmName(packageManager: string | null | undefined): Pm {
+  const name = packageManager?.split("@")[0];
+  return name === "pnpm" || name === "yarn" || name === "bun" ? name : "npm";
+}
+
+export function runScript(pm: Pm, script: string): string {
   switch (pm) {
     case "npm":
       return script === "test" ? "npm test" : `npm run ${script}`;

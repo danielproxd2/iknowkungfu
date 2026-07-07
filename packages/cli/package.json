@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "commander": "^15.0.0",
+    "es-module-lexer": "^2.3.0",
     "fast-glob": "^3.3.3",
     "ignore": "^7.0.5",
     "smol-toml": "^1.4.0",
