@@ -21,7 +21,7 @@ export async function runPipeline(root: string, g: GlobalOpts, opts: { force?: b
   const mapResult = writeMap(root, map, { dryRun: g.dryRun });
 
   const ctx: DocContext = { name: path.basename(root), manifest: effective, map, config: loaded.config };
-  const docReports = writeArtifacts(root, docsFor(root, effective, map, loaded.config), effective.inputsHash, {
+  const docReports = writeArtifacts(root, docsFor(root, effective, map, loaded.config), {
     dryRun: g.dryRun,
     force: opts.force,
   });
@@ -43,5 +43,5 @@ export function writeAdapters(
   force?: boolean,
 ): ArtifactWriteReport[] {
   const artifacts = clients.map((c) => adapterArtifact(c, ctx));
-  return writeArtifacts(root, artifacts, ctx.manifest.inputsHash, { dryRun: g.dryRun, force });
+  return writeArtifacts(root, artifacts, { dryRun: g.dryRun, force });
 }

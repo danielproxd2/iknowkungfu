@@ -17,7 +17,7 @@ export function registerGenerate(program: Command): void {
         throw new HarnessError("usage", "No manifest/map found.", "Run `repo-harness scan` (or `init`) first.");
       }
       const { config } = loadConfig(g.root);
-      const reports = writeArtifacts(g.root, docsFor(g.root, manifest, map, config), manifest.inputsHash, {
+      const reports = writeArtifacts(g.root, docsFor(g.root, manifest, map, config), {
         dryRun: g.dryRun,
         force: opts.force,
       });

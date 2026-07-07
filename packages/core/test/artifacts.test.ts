@@ -21,8 +21,8 @@ const config = parseConfig({
   ],
 });
 const [projectContext, runbook] = generateDocs("acme-shop", manifest, map, config) as [GeneratedArtifact, GeneratedArtifact];
-const pcContent = mergeArtifact(null, projectContext, manifest.inputsHash);
-const rbContent = mergeArtifact(null, runbook, manifest.inputsHash);
+const pcContent = mergeArtifact(null, projectContext);
+const rbContent = mergeArtifact(null, runbook);
 
 describe("PROJECT_CONTEXT.md", () => {
   it("contains exact commands, layout, entrypoints, and risk marks", () => {
@@ -53,13 +53,13 @@ describe("AGENT_RUNBOOK.md", () => {
 
 describe("marker-block merge semantics", () => {
   it("is idempotent", () => {
-    expect(mergeArtifact(pcContent, projectContext, manifest.inputsHash)).toBe(pcContent);
+    expect(mergeArtifact(pcContent, projectContext)).toBe(pcContent);
     expect(staleBlockIds(pcContent, projectContext)).toEqual([]);
   });
 
   it("preserves user text outside blocks", () => {
     const edited = `${pcContent}\n## My notes\nDeploy on Fridays only.\n`;
-    const merged = mergeArtifact(edited, projectContext, manifest.inputsHash);
+    const merged = mergeArtifact(edited, projectContext);
     expect(merged).toContain("Deploy on Fridays only.");
   });
 
@@ -71,7 +71,7 @@ describe("marker-block merge semantics", () => {
       ),
     };
     expect(staleBlockIds(pcContent, bumped)).toEqual(["commands"]);
-    const merged = mergeArtifact(pcContent, bumped, manifest.inputsHash);
+    const merged = mergeArtifact(pcContent, bumped);
     expect(merged).toContain("new table");
     expect(merged).toContain("# Project Context: acme-shop"); // identity untouched
   });
@@ -81,11 +81,11 @@ describe("marker-block merge semantics", () => {
       ...projectContext,
       blocks: projectContext.blocks.map((b) => (b.id === "identity" ? { ...b, content: "DIFFERENT RENDER" } : b)),
     };
-    expect(mergeArtifact(pcContent, templateDrift, manifest.inputsHash)).toBe(pcContent);
+    expect(mergeArtifact(pcContent, templateDrift)).toBe(pcContent);
   });
 
   it("throws BlockCorruptionError on unbalanced markers", () => {
     const corrupted = pcContent.replace("<!-- rh:end -->", "");
-    expect(() => mergeArtifact(corrupted, projectContext, manifest.inputsHash)).toThrow(BlockCorruptionError);
+    expect(() => mergeArtifact(corrupted, projectContext)).toThrow(BlockCorruptionError);
   });
 });
