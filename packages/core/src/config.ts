@@ -1,11 +1,13 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { parseConfig, type HarnessConfig } from "@repo-harness/schemas/config";
+import { parseConfig, type HarnessConfig } from "@repo-harness/schemas";
 import { HarnessError } from "./errors";
 
 export const HARNESS_DIR = ".repo-harness";
 export const CONFIG_PATH = `${HARNESS_DIR}/config.json`;
 export const MANIFEST_PATH = `${HARNESS_DIR}/manifest.json`;
+export const MAP_PATH = `${HARNESS_DIR}/map.json`;
+export const DOCS_DIR = `${HARNESS_DIR}/docs`;
 
 export interface LoadedConfig {
   config: HarnessConfig;
