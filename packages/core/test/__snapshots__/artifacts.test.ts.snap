@@ -65,11 +65,11 @@ Monorepo: no · 16 files · main language TypeScript (96%) · pnpm@9.6.0 · node
 \`{file}\` = a specific file path. Commands not in this table must not be guessed.
 <!-- rh:end -->
 
-<!-- rh:begin id=layout inputs=5e431436f716 -->
+<!-- rh:begin id=layout inputs=e61f4f5097b8 -->
 ## Layout
 - \`e2e/\` — test
 - \`scripts/\` — script
-- \`src/\` — route
+- \`src/\` — route ⚠ RISK AREA (payments) — see REFACTOR_GUARDRAILS.md ⚠ RISK AREA (db) — see REFACTOR_GUARDRAILS.md ⚠ RISK AREA (migrations) — see REFACTOR_GUARDRAILS.md
 - \`tests/\` — test
 
 Heaviest imports: \`src/lib/cart.ts\` (4 dependents) · \`src/db/schema.ts\` (1 dependents)
