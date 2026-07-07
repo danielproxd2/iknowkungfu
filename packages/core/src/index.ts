@@ -7,6 +7,10 @@ export { loadConfig, type LoadedConfig, HARNESS_DIR, CONFIG_PATH, MANIFEST_PATH,
 export { buildMap, type BuildMapOptions } from "./graph/build";
 export * from "./artifacts/index";
 export { inferRiskAreas, effectiveRiskAreas } from "./risk/areas";
+export { changedFiles, parseDiff, requireGitRepo, type ParsedDiffFile } from "./git";
+export { planVerify, type VerifyPlan, type VerifyScope } from "./verify/plan";
+export { runVerify, type RunVerifyOptions } from "./verify/run";
+export { parseFailures } from "./verify/parsers";
 export { nameMatchesSource } from "./graph/testmap";
 export { classifyRole } from "./graph/roles";
 export { computeInputsHash, isTrackedInput } from "./hash";
