@@ -9,6 +9,7 @@
   "dependencies": {
     "@repo-harness/schemas": "workspace:*",
     "es-module-lexer": "^2.3.0",
+    "execa": "^9.6.1",
     "fast-glob": "^3.3.3",
     "ignore": "^7.0.5",
     "smol-toml": "^1.4.0"

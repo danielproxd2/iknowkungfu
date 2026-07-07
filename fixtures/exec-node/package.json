@@ -1,0 +1,12 @@
+{
+  "name": "exec-node",
+  "private": true,
+  "scripts": {
+    "test": "node run-tests.mjs",
+    "typecheck": "node checks/typecheck.mjs",
+    "lint": "node checks/lint.mjs"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0"
+  }
+}

@@ -5,6 +5,7 @@ import { registerAdapt } from "./commands/adapt";
 import { registerGenerate } from "./commands/generate";
 import { registerInit } from "./commands/init";
 import { registerScan } from "./commands/scan";
+import { registerVerify } from "./commands/verify";
 
 const program = new Command("repo-harness")
   .description("Turn any repository into an AI-ready workspace.")
@@ -18,6 +19,7 @@ registerInit(program);
 registerScan(program);
 registerGenerate(program);
 registerAdapt(program);
+registerVerify(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   const json = process.argv.includes("--json");
