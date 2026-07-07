@@ -41,7 +41,6 @@ Instructions alone don't fix this: a Cursor rule can *tell* a model to run the r
 
 Every generated fact is provenance-tagged: untagged facts are parsed from your config files (trust them); `⚠ inferred` facts are heuristic (verify them). Writes are allow-listed to harness paths, always inside clearly-marked blocks, and `--dry-run` works on every writing command.
 
-See [DEMO.md](DEMO.md) for the full loop with real captured output.
 
 ## Install
 
@@ -81,5 +80,4 @@ Declare your risk areas in `.iknowkungfu/config.json` (init asks once) — it's 
 - [CLI reference](docs/CLI.md) — every command, option, exit code, JSON mode, CI wiring
 - [MCP server](docs/MCP.md) — registration per client and all nine tools
 - [Configuration & artifacts](docs/CONFIGURATION.md) — `config.json`, risk areas, marker blocks, provenance
-- [DEMO.md](DEMO.md) — the full loop with real captured output
 - [CHANGELOG.md](CHANGELOG.md)
