@@ -1,4 +1,5 @@
 import { blockHash, type ArtifactBlock, type GeneratedArtifact } from "./blocks";
+import type { HarnessConfig } from "@repo-harness/schemas";
 import type { DocContext } from "./context";
 
 const BUDGET = 100;
@@ -10,8 +11,8 @@ export interface PromptDef {
 }
 
 /** Also consumed by the MCP server's prompt list — single source of truth. */
-export function promptDefs(ctx: DocContext): PromptDef[] {
-  const limits = ctx.config.diffLimits;
+export function promptDefs(config: HarnessConfig): PromptDef[] {
+  const limits = config.diffLimits;
   return [
     {
       name: "fix-bug",
@@ -42,7 +43,7 @@ export function promptDefs(ctx: DocContext): PromptDef[] {
 
 export function promptsArtifact(ctx: DocContext): GeneratedArtifact {
   const blocks: ArtifactBlock[] = [{ id: "title", inputs: blockHash("title-v1"), content: "# Prompts" }];
-  for (const p of promptDefs(ctx)) {
+  for (const p of promptDefs(ctx.config)) {
     blocks.push({
       id: `prompt-${p.name}`,
       inputs: blockHash(p),
