@@ -13,10 +13,20 @@
   "bugs": {
     "url": "https://github.com/danielproxd2/repo-harness/issues"
   },
-  "keywords": ["ai", "agents", "mcp", "claude", "codex", "cursor", "copilot", "context", "developer-tools"],
+  "keywords": [
+    "ai",
+    "agents",
+    "mcp",
+    "claude",
+    "codex",
+    "cursor",
+    "copilot",
+    "context",
+    "developer-tools"
+  ],
   "bin": {
-    "repo-harness": "./dist/index.js",
-    "rh": "./dist/index.js"
+    "repo-harness": "dist/index.js",
+    "rh": "dist/index.js"
   },
   "files": [
     "dist"
