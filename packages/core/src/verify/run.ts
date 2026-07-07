@@ -1,4 +1,4 @@
-import { execaCommand } from "execa";
+import { execa, execaCommand } from "execa";
 import {
   SCHEMA_VERSION,
   type CommandRunResult,
@@ -18,19 +18,32 @@ const DEFAULT_TIMEOUT_MS = 600_000;
 
 async function runOne(command: string, cwd: string, opts: RunVerifyOptions): Promise<CommandRunResult> {
   const started = Date.now();
-  const result = await execaCommand(command, {
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const win32 = process.platform === "win32";
+  const subprocess = execaCommand(command, {
     cwd,
     shell: true,
     all: true,
     reject: false,
-    timeout: opts.timeoutMs ?? DEFAULT_TIMEOUT_MS,
+    // On Windows, killing the shell leaves grandchildren alive holding the
+    // stdio pipes, so execa's own timeout never resolves; tree-kill instead.
+    ...(win32 ? {} : { timeout: timeoutMs }),
     env: { FORCE_COLOR: "0" },
   });
+  let winTimedOut = false;
+  const winTimer = win32
+    ? setTimeout(() => {
+        winTimedOut = true;
+        void execa("taskkill", ["/pid", String(subprocess.pid), "/t", "/f"], { reject: false });
+      }, timeoutMs)
+    : undefined;
+  const result = await subprocess;
+  if (winTimer) clearTimeout(winTimer);
   const output = result.all ?? "";
   if (opts.onOutput && output.length > 0) opts.onOutput(`${output}\n`);
 
   let status: CommandRunResult["status"];
-  if (result.timedOut) status = "timeout";
+  if (result.timedOut || winTimedOut) status = "timeout";
   else if (result.exitCode === 127 || /command not found|not recognized as an internal/i.test(output) || result.failed && result.exitCode === undefined)
     status = "not-found";
   else status = result.exitCode === 0 ? "pass" : "fail";

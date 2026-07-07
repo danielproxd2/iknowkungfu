@@ -9,8 +9,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # pnpm 11 (dev tooling) needs node >= 22.13; the published CLI still
+        # supports node 20 — covered by the artifact-node20 job below.
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node: [20, 22]
+        node: [22, 24]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -24,4 +26,24 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm test
+      - run: node scripts/pack-smoke.mjs
+
+  # Prove the published artifact works on the oldest supported node (engines >= 20):
+  # build with node 22 (pnpm requires it), then run the tarball smoke test on node 20.
+  artifact-node20:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - run: node scripts/pack-smoke.mjs
