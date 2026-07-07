@@ -7,6 +7,7 @@ export { loadConfig, type LoadedConfig, HARNESS_DIR, CONFIG_PATH, MANIFEST_PATH,
 export { buildMap, type BuildMapOptions } from "./graph/build";
 export * from "./artifacts/index";
 export { inferRiskAreas, effectiveRiskAreas } from "./risk/areas";
+export { riskCheck, type RiskContext } from "./risk/engine";
 export { changedFiles, parseDiff, requireGitRepo, type ParsedDiffFile } from "./git";
 export { planVerify, type VerifyPlan, type VerifyScope } from "./verify/plan";
 export { runVerify, type RunVerifyOptions } from "./verify/run";
