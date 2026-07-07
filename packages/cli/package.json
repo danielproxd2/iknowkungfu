@@ -4,6 +4,15 @@
   "description": "Turn any repository into an AI-ready workspace: precomputed context, exact commands, verification, and risk guardrails for coding agents.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielproxd2/repo-harness.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/danielproxd2/repo-harness#readme",
+  "bugs": {
+    "url": "https://github.com/danielproxd2/repo-harness/issues"
+  },
   "keywords": ["ai", "agents", "mcp", "claude", "codex", "cursor", "copilot", "context", "developer-tools"],
   "bin": {
     "repo-harness": "./dist/index.js",
