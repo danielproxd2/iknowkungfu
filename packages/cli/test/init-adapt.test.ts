@@ -13,12 +13,12 @@ const read = (rel: string) => readFileSync(path.join(repo, rel), "utf8");
 const SHIMS = [
   "AGENTS.md",
   "CLAUDE.md",
-  ".codex/skills/repo-harness/SKILL.md",
-  ".cursor/rules/repo-harness.mdc",
+  ".codex/skills/iknowkungfu/SKILL.md",
+  ".cursor/rules/iknowkungfu.mdc",
   ".github/copilot-instructions.md",
 ];
 
-describe("repo-harness init (built binary)", () => {
+describe("iknowkungfu init (built binary)", () => {
   it("creates the full v0 file set with a summary", async () => {
     // Pre-existing user copilot instructions must survive.
     mkdirSync(path.join(repo, ".github"), { recursive: true });
@@ -29,14 +29,14 @@ describe("repo-harness init (built binary)", () => {
     expect(res.stdout).toContain("✔ Detected:");
     expect(res.stdout).toContain(".mcp.json");
 
-    for (const rel of [".repo-harness/config.json", ".repo-harness/manifest.json", ".repo-harness/map.json", ".repo-harness/docs/PROJECT_CONTEXT.md", ...SHIMS]) {
+    for (const rel of [".iknowkungfu/config.json", ".iknowkungfu/manifest.json", ".iknowkungfu/map.json", ".iknowkungfu/docs/PROJECT_CONTEXT.md", ...SHIMS]) {
       expect(existsSync(path.join(repo, rel)), rel).toBe(true);
     }
     expect(read(".github/copilot-instructions.md")).toContain("Always use tabs.");
-    expect(read(".github/copilot-instructions.md")).toContain("rh:begin id=copilot");
+    expect(read(".github/copilot-instructions.md")).toContain("kungfu:begin id=copilot");
     expect(read("CLAUDE.md")).toContain("@AGENTS.md");
-    expect(read(".codex/skills/repo-harness/SKILL.md")).toMatch(/^---\nname: repo-harness/);
-    expect(read(".cursor/rules/repo-harness.mdc")).toMatch(/^---\ndescription: /);
+    expect(read(".codex/skills/iknowkungfu/SKILL.md")).toMatch(/^---\nname: iknowkungfu/);
+    expect(read(".cursor/rules/iknowkungfu.mdc")).toMatch(/^---\ndescription: /);
   });
 
   it("every shim stays within the 30-line budget", () => {
@@ -52,7 +52,7 @@ describe("repo-harness init (built binary)", () => {
   });
 });
 
-describe("repo-harness adapt (built binary)", () => {
+describe("iknowkungfu adapt (built binary)", () => {
   it("is idempotent", async () => {
     const res = await runCli(["adapt", "--cwd", repo]);
     expect(res.code).toBe(0);
@@ -74,12 +74,12 @@ describe("repo-harness adapt (built binary)", () => {
 
   it("--remove deletes owned files but only strips blocks from shared ones", async () => {
     await runCli(["adapt", "--remove", "cursor", "--cwd", repo]);
-    expect(existsSync(path.join(repo, ".cursor/rules/repo-harness.mdc"))).toBe(false);
+    expect(existsSync(path.join(repo, ".cursor/rules/iknowkungfu.mdc"))).toBe(false);
 
     await runCli(["adapt", "--remove", "copilot", "--cwd", repo]);
     const copilot = read(".github/copilot-instructions.md");
     expect(copilot).toContain("Always use tabs.");
-    expect(copilot).not.toContain("rh:begin");
+    expect(copilot).not.toContain("kungfu:begin");
 
     // AGENTS.md is fully ours here → file removed entirely.
     await runCli(["adapt", "--remove", "agents-md", "--cwd", repo]);

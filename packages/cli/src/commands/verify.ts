@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { changedFiles, planVerify, runVerify, HarnessError, type VerifyScope } from "@repo-harness/core";
+import { changedFiles, planVerify, runVerify, HarnessError, type VerifyScope } from "@iknowkungfu/core";
 import { requireContext } from "./adapt";
 import { globalOpts } from "../context";
 
@@ -52,7 +52,7 @@ export function registerVerify(program: Command): void {
           throw new HarnessError(
             "env",
             "A catalog command was not found on this machine.",
-            "Install the missing tool (see output above) or override the command in .repo-harness/config.json.",
+            "Install the missing tool (see output above) or override the command in .iknowkungfu/config.json.",
           );
         }
         if (result.verdict === "fail") process.exitCode = 1;

@@ -1,15 +1,15 @@
 # MCP Server
 
-`repo-harness mcp` serves the harness as [Model Context Protocol](https://modelcontextprotocol.io) tools over stdio. Agents get precomputed, deterministic answers — a repo map, exact commands, test coverage for a change — instead of burning context exploring the tree or guessing.
+`iknowkungfu mcp` serves the harness as [Model Context Protocol](https://modelcontextprotocol.io) tools over stdio. Agents get precomputed, deterministic answers — a repo map, exact commands, test coverage for a change — instead of burning context exploring the tree or guessing.
 
 ## Registration
 
 The server must run with the target repo as its working directory (clients handle this when registered per-project).
 
-**Claude Code** — `.mcp.json` at the repo root (or `claude mcp add repo-harness -- repo-harness mcp`):
+**Claude Code** — `.mcp.json` at the repo root (or `claude mcp add iknowkungfu -- iknowkungfu mcp`):
 
 ```json
-{ "mcpServers": { "repo-harness": { "command": "repo-harness", "args": ["mcp"] } } }
+{ "mcpServers": { "iknowkungfu": { "command": "iknowkungfu", "args": ["mcp"] } } }
 ```
 
 **Cursor** — `.cursor/mcp.json`, **Codex** — `~/.codex/config.toml`, and any other stdio MCP client: same command, same args.
@@ -18,7 +18,7 @@ Add `--readonly` to the args to disable the one writing tool (`refresh_context`)
 
 ## Staleness
 
-Every tool response includes `stale: true` when the repo has drifted from the harness artifacts. When you see it, call `refresh_context` (or run `repo-harness refresh`) and retry.
+Every tool response includes `stale: true` when the repo has drifted from the harness artifacts. When you see it, call `refresh_context` (or run `iknowkungfu refresh`) and retry.
 
 ## Read tools
 

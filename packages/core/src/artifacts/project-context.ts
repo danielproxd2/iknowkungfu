@@ -91,7 +91,7 @@ export function projectContextArtifact(ctx: DocContext): GeneratedArtifact {
   if (lines > BUDGET) warnings.push(`PROJECT_CONTEXT.md over budget: ~${lines} lines (budget ${BUDGET})`);
   return {
     id: "project-context",
-    path: ".repo-harness/docs/PROJECT_CONTEXT.md",
+    path: ".iknowkungfu/docs/PROJECT_CONTEXT.md",
     blocks,
     ownership: "managed-file",
     lineBudget: BUDGET,

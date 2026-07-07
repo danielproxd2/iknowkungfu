@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildFileIndex } from "@repo-harness/core";
+import { buildFileIndex } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 describe("fsindex", () => {

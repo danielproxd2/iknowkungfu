@@ -1,4 +1,4 @@
-import type { Fact, FileRole } from "@repo-harness/schemas";
+import type { Fact, FileRole } from "@iknowkungfu/schemas";
 
 const CONFIG_EXACT = new Set([
   "package.json",

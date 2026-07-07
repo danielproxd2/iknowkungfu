@@ -1,13 +1,13 @@
 {
-  "name": "@repo-harness/core",
-  "version": "1.0.1",
+  "name": "@iknowkungfu/core",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@repo-harness/schemas": "workspace:*",
+    "@iknowkungfu/schemas": "workspace:*",
     "es-module-lexer": "^2.3.0",
     "execa": "^9.6.1",
     "fast-glob": "^3.3.3",

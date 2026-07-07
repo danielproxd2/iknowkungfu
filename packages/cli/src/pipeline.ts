@@ -1,7 +1,7 @@
 import path from "node:path";
-import { buildMap, loadConfig, scan, type DocContext } from "@repo-harness/core";
-import { adapterArtifact } from "@repo-harness/adapters";
-import type { Client } from "@repo-harness/schemas";
+import { buildMap, loadConfig, scan, type DocContext } from "@iknowkungfu/core";
+import { adapterArtifact } from "@iknowkungfu/adapters";
+import type { Client } from "@iknowkungfu/schemas";
 import type { GlobalOpts } from "./context";
 import { docsFor, writeArtifacts, type ArtifactWriteReport } from "./generate";
 import { readManifest, writeManifest, writeMap } from "./manifest-io";

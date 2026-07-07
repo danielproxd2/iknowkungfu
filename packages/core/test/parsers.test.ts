@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseFailures } from "@repo-harness/core";
+import { parseFailures } from "@iknowkungfu/core";
 
 describe("reporter parsers (best-effort by contract)", () => {
   it("parses tsc errors", () => {

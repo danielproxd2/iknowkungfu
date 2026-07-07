@@ -19,7 +19,7 @@ const DEFAULT_EXCLUDES = [
   "**/target/**",
   "**/.turbo/**",
   "**/.pytest_cache/**",
-  "**/.repo-harness/**",
+  "**/.iknowkungfu/**",
 ];
 
 const MAX_FILES = 200_000;
@@ -66,7 +66,7 @@ export async function buildFileIndex(
     throw new HarnessError(
       "usage",
       `Repo has ${sizes.size} files (max ${MAX_FILES}).`,
-      "Add exclude globs to .repo-harness/config.json and re-run.",
+      "Add exclude globs to .iknowkungfu/config.json and re-run.",
     );
   }
 

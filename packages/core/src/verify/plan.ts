@@ -1,4 +1,4 @@
-import type { ProjectMap, RepoManifest } from "@repo-harness/schemas";
+import type { ProjectMap, RepoManifest } from "@iknowkungfu/schemas";
 
 export type VerifyScope = "changed" | "full" | "baseline";
 

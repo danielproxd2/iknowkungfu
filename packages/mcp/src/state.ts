@@ -6,14 +6,14 @@ import {
   buildFileIndex,
   computeInputsHash,
   loadConfig,
-} from "@repo-harness/core";
+} from "@iknowkungfu/core";
 import {
   parseManifest,
   parseMap,
   type HarnessConfig,
   type ProjectMap,
   type RepoManifest,
-} from "@repo-harness/schemas";
+} from "@iknowkungfu/schemas";
 
 export interface HarnessState {
   manifest: RepoManifest;
@@ -56,7 +56,7 @@ export async function loadState(root: string): Promise<HarnessState | StateError
   const manifestJson = readJson(root, MANIFEST_PATH);
   const mapJson = readJson(root, MAP_PATH);
   if (manifestJson === null || mapJson === null) {
-    return { code: "usage", message: "No repo-harness manifest found in this repo.", fix: "Run `repo-harness init` first." };
+    return { code: "usage", message: "No iknowkungfu manifest found in this repo.", fix: "Run `iknowkungfu init` first." };
   }
   let manifest: RepoManifest;
   let map: ProjectMap;
@@ -67,7 +67,7 @@ export async function loadState(root: string): Promise<HarnessState | StateError
     loaded = loadConfig(root);
   } catch (err) {
     const detail = err instanceof Error ? err.message.split("\n")[0] : "parse error";
-    return { code: "usage", message: `Harness files failed validation: ${detail}`, fix: "Run `repo-harness refresh --force`." };
+    return { code: "usage", message: `Harness files failed validation: ${detail}`, fix: "Run `iknowkungfu refresh --force`." };
   }
   const stale = (await currentHash(root, loaded.raw)) !== manifest.inputsHash;
   return { manifest, map, config: loaded.config, stale };

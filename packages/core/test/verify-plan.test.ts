@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildMap, planVerify, scan } from "@repo-harness/core";
+import { buildMap, planVerify, scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const root = fixture("nextjs-pnpm");

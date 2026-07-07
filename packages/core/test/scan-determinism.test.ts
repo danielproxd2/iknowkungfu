@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scan } from "@repo-harness/core";
+import { scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 describe("scan determinism", () => {

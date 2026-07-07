@@ -17,7 +17,7 @@ Node ≥ 20, pnpm ≥ 11. CI runs {ubuntu, macos, windows} × node {20, 22} plus
 - `packages/schemas` — zod schemas; the data contract. Everything persisted is validated.
 - `packages/core` — all deterministic logic (detection, graph, artifacts, verify, risk). **Core never writes files.**
 - `packages/cli` — commander CLI; owns every filesystem write through `writeManaged` (allow-listed paths only). The only published package; bundles the others.
-- `packages/mcp` — MCP server; thin wrappers over core + the precomputed `.repo-harness/` files.
+- `packages/mcp` — MCP server; thin wrappers over core + the precomputed `.iknowkungfu/` files.
 - `packages/adapters` — one small module per client shim.
 - `fixtures/` — miniature real repos the tests run against.
 

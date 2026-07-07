@@ -1,8 +1,8 @@
 import path from "node:path";
 import type { Command } from "commander";
-import { HarnessError, loadConfig, removeBlock, staleBlockIds, type DocContext } from "@repo-harness/core";
-import { adapterArtifact, adapterPath, MCP_JSON_SNIPPET } from "@repo-harness/adapters";
-import { ALL_CLIENTS, type Client } from "@repo-harness/schemas";
+import { HarnessError, loadConfig, removeBlock, staleBlockIds, type DocContext } from "@iknowkungfu/core";
+import { adapterArtifact, adapterPath, MCP_JSON_SNIPPET } from "@iknowkungfu/adapters";
+import { ALL_CLIENTS, type Client } from "@iknowkungfu/schemas";
 import { globalOpts, type GlobalOpts } from "../context";
 import { readManifest, readMap } from "../manifest-io";
 import { writeAdapters } from "../pipeline";
@@ -24,7 +24,7 @@ export function parseClients(values: string[]): Client[] {
 export function requireContext(root: string): DocContext {
   const manifest = readManifest(root);
   const map = readMap(root);
-  if (!manifest || !map) throw new HarnessError("usage", "No manifest/map found.", "Run `repo-harness init` first.");
+  if (!manifest || !map) throw new HarnessError("usage", "No manifest/map found.", "Run `iknowkungfu init` first.");
   return { name: path.basename(root), manifest, map, config: loadConfig(root).config };
 }
 

@@ -1,5 +1,5 @@
 import { parse as parseToml } from "smol-toml";
-import type { CatalogCommand, Fact } from "@repo-harness/schemas";
+import type { CatalogCommand, Fact } from "@iknowkungfu/schemas";
 import type { FileIndex } from "../fsindex";
 import { EMPTY_DETECTION, framework, type StackDetection } from "./types";
 

@@ -6,8 +6,8 @@ import {
   mergeArtifact,
   staleBlockIds,
   type GeneratedArtifact,
-} from "@repo-harness/core";
-import type { HarnessConfig, ProjectMap, RepoManifest } from "@repo-harness/schemas";
+} from "@iknowkungfu/core";
+import type { HarnessConfig, ProjectMap, RepoManifest } from "@iknowkungfu/schemas";
 import { readRepoFile, writeManaged, type WriteResult } from "./write";
 
 export interface ArtifactWriteReport extends WriteResult {

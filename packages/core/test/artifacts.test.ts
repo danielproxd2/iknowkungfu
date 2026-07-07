@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseConfig } from "@repo-harness/schemas";
+import { parseConfig } from "@iknowkungfu/schemas";
 import {
   BlockCorruptionError,
   buildMap,
@@ -8,7 +8,7 @@ import {
   scan,
   staleBlockIds,
   type GeneratedArtifact,
-} from "@repo-harness/core";
+} from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const root = fixture("nextjs-pnpm");
@@ -42,7 +42,7 @@ describe("PROJECT_CONTEXT.md", () => {
 
 describe("AGENT_RUNBOOK.md", () => {
   it("encodes the loop with real commands and never-edit paths", () => {
-    expect(rbContent).toContain("repo-harness verify --changed");
+    expect(rbContent).toContain("iknowkungfu verify --changed");
     expect(rbContent).toContain("`pnpm typecheck`");
     expect(rbContent).toContain("More than 5 files or 150 changed lines");
     expect(rbContent).toContain("src/db/migrations/**");
@@ -85,7 +85,7 @@ describe("marker-block merge semantics", () => {
   });
 
   it("throws BlockCorruptionError on unbalanced markers", () => {
-    const corrupted = pcContent.replace("<!-- rh:end -->", "");
+    const corrupted = pcContent.replace("<!-- kungfu:end -->", "");
     expect(() => mergeArtifact(corrupted, projectContext)).toThrow(BlockCorruptionError);
   });
 });

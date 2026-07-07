@@ -1,4 +1,4 @@
-import type { HarnessConfig, ProjectMap, RepoManifest, RiskArea } from "@repo-harness/schemas";
+import type { HarnessConfig, ProjectMap, RepoManifest, RiskArea } from "@iknowkungfu/schemas";
 
 export interface DocContext {
   /** Project display name (root dir basename or package name). */

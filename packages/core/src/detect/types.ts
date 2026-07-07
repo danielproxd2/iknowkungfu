@@ -1,4 +1,4 @@
-import type { CatalogCommand, Fact } from "@repo-harness/schemas";
+import type { CatalogCommand, Fact } from "@iknowkungfu/schemas";
 
 export interface StackDetection {
   frameworks: Fact<string>[];

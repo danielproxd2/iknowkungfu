@@ -1,4 +1,4 @@
-import type { HarnessConfig, ProjectMap, RepoManifest } from "@repo-harness/schemas";
+import type { HarnessConfig, ProjectMap, RepoManifest } from "@iknowkungfu/schemas";
 import { pathInArea } from "../artifacts/context";
 import { effectiveRiskAreas } from "../risk/areas";
 
@@ -81,7 +81,7 @@ export function planSmallPr(task: string, touchHint: string[], ctx: PlanContext)
     });
   }
 
-  for (const step of steps) step.verify.push("repo-harness risk --staged");
+  for (const step of steps) step.verify.push("iknowkungfu risk --staged");
 
   return {
     task,

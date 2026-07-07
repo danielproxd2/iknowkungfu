@@ -1,4 +1,4 @@
-import type { HarnessConfig, ProjectMap, RiskArea } from "@repo-harness/schemas";
+import type { HarnessConfig, ProjectMap, RiskArea } from "@iknowkungfu/schemas";
 
 /** Directory-name patterns that usually indicate blast-radius-sensitive code. */
 const NAME_PATTERNS: Array<{ id: string; re: RegExp; reason: string }> = [

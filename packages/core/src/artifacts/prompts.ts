@@ -1,5 +1,5 @@
 import { blockHash, type ArtifactBlock, type GeneratedArtifact } from "./blocks";
-import type { HarnessConfig } from "@repo-harness/schemas";
+import type { HarnessConfig } from "@iknowkungfu/schemas";
 import type { DocContext } from "./context";
 
 const BUDGET = 100;
@@ -18,9 +18,9 @@ export function promptDefs(config: HarnessConfig): PromptDef[] {
       name: "fix-bug",
       description: "Fix a bug with a reproduce-first, smallest-diff workflow",
       template:
-        "Fix: {DESCRIPTION}. Read .repo-harness/docs/PROJECT_CONTEXT.md first. Reproduce with a failing test " +
+        "Fix: {DESCRIPTION}. Read .iknowkungfu/docs/PROJECT_CONTEXT.md first. Reproduce with a failing test " +
         "before changing source. Follow AGENT_RUNBOOK.md steps 2–6. Smallest possible diff; do not refactor " +
-        "adjacent code. Finish with the output of `repo-harness verify --changed`.",
+        "adjacent code. Finish with the output of `iknowkungfu verify --changed`.",
     },
     {
       name: "add-feature",
@@ -34,7 +34,7 @@ export function promptDefs(config: HarnessConfig): PromptDef[] {
       name: "review-diff",
       description: "Review the staged diff with harness evidence attached",
       template:
-        "Review the staged diff. Run `repo-harness risk --staged` and `repo-harness verify --changed`; include " +
+        "Review the staged diff. Run `iknowkungfu risk --staged` and `iknowkungfu verify --changed`; include " +
         "both outputs verbatim. Then check: does the behavior change match the task? do tests cover the new " +
         "paths? was any risk-area file touched without following its rule?",
     },
@@ -52,7 +52,7 @@ export function promptsArtifact(ctx: DocContext): GeneratedArtifact {
   }
   return {
     id: "prompts",
-    path: ".repo-harness/docs/PROMPTS.md",
+    path: ".iknowkungfu/docs/PROMPTS.md",
     blocks,
     ownership: "managed-file",
     lineBudget: BUDGET,

@@ -1,4 +1,4 @@
-import type { Fact } from "@repo-harness/schemas";
+import type { Fact } from "@iknowkungfu/schemas";
 import type { FileIndex } from "../fsindex";
 
 const EXT_LANG: Record<string, string> = {

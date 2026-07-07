@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
-import { buildMap, scan } from "@repo-harness/core";
+import { buildMap, scan } from "@iknowkungfu/core";
 
 // Perf guard from the plan: scan+map < 5s on 5k synthetic files.
 const tmp = mkdtempSync(path.join(tmpdir(), "rh-perf-"));

@@ -34,8 +34,8 @@ jobs:
             echo "tag v$TAG does not match package version $VERSION" >&2
             exit 1
           fi
-          if npm view "repo-harness-cli@$VERSION" version >/dev/null 2>&1; then
-            echo "repo-harness-cli@$VERSION already on the registry — skipping publish"
+          if npm view "iknowkungfu@$VERSION" version >/dev/null 2>&1; then
+            echo "iknowkungfu@$VERSION already on the registry — skipping publish"
             echo "published=true" >> "$GITHUB_OUTPUT"
           else
             echo "published=false" >> "$GITHUB_OUTPUT"

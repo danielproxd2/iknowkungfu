@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { createServer, invalidateStaleCache } from "@repo-harness/mcp";
+import { createServer, invalidateStaleCache } from "@iknowkungfu/mcp";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixture = (name: string) => path.resolve(here, "../../../fixtures", name);
@@ -34,13 +34,13 @@ async function call(c: Client, name: string, args: Record<string, unknown> = {})
 beforeAll(async () => {
   cpSync(fixture("nextjs-pnpm"), repo, { recursive: true });
   // Build the harness via core (faster than spawning the CLI here).
-  const { scan, buildMap } = await import("@repo-harness/core");
+  const { scan, buildMap } = await import("@iknowkungfu/core");
   const { mkdirSync, writeFileSync: wf } = await import("node:fs");
   const manifest = await scan(repo, {});
   const map = await buildMap(repo, manifest);
-  mkdirSync(path.join(repo, ".repo-harness"), { recursive: true });
-  wf(path.join(repo, ".repo-harness/manifest.json"), JSON.stringify(manifest));
-  wf(path.join(repo, ".repo-harness/map.json"), JSON.stringify(map));
+  mkdirSync(path.join(repo, ".iknowkungfu"), { recursive: true });
+  wf(path.join(repo, ".iknowkungfu/manifest.json"), JSON.stringify(manifest));
+  wf(path.join(repo, ".iknowkungfu/map.json"), JSON.stringify(map));
   client = await connect(repo);
 }, 60_000);
 
@@ -122,7 +122,7 @@ describe("MCP read tools", () => {
   it("no manifest → structured 'run init' error", async () => {
     const bare = await connect(fixture("makefile-only"));
     const res = await call(bare, "repo_map");
-    expect((res.error as { fix: string }).fix).toContain("repo-harness init");
+    expect((res.error as { fix: string }).fix).toContain("iknowkungfu init");
   });
 
   it("prompts render with the description substituted", async () => {

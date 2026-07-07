@@ -9,8 +9,8 @@ import {
   nameMatchesSource,
   planVerify,
   promptDefs,
-} from "@repo-harness/core";
-import { parseConfig, type RiskArea } from "@repo-harness/schemas";
+} from "@iknowkungfu/core";
+import { parseConfig, type RiskArea } from "@iknowkungfu/schemas";
 import { capList, err, ok, type ToolResult } from "./payload";
 import { isStateError, loadState, type HarnessState } from "./state";
 

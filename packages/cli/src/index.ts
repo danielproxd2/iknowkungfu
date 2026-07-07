@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@repo-harness/core";
+import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@iknowkungfu/core";
 import { registerAdapt } from "./commands/adapt";
 import { registerGenerate } from "./commands/generate";
 import { registerInit } from "./commands/init";
@@ -11,7 +11,7 @@ import { registerRisk } from "./commands/risk";
 import { registerScan } from "./commands/scan";
 import { registerVerify } from "./commands/verify";
 
-const program = new Command("repo-harness")
+const program = new Command("iknowkungfu")
   .description("Turn any repository into an AI-ready workspace.")
   .version(HARNESS_VERSION)
   .option("--json", "machine-readable output")

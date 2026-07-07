@@ -20,10 +20,10 @@ importers:
 
   packages/adapters:
     dependencies:
-      '@repo-harness/core':
+      '@iknowkungfu/core':
         specifier: workspace:*
         version: link:../core
-      '@repo-harness/schemas':
+      '@iknowkungfu/schemas':
         specifier: workspace:*
         version: link:../schemas
 
@@ -54,16 +54,16 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
-      '@repo-harness/adapters':
+      '@iknowkungfu/adapters':
         specifier: workspace:*
         version: link:../adapters
-      '@repo-harness/core':
+      '@iknowkungfu/core':
         specifier: workspace:*
         version: link:../core
-      '@repo-harness/mcp':
+      '@iknowkungfu/mcp':
         specifier: workspace:*
         version: link:../mcp
-      '@repo-harness/schemas':
+      '@iknowkungfu/schemas':
         specifier: workspace:*
         version: link:../schemas
       tsdown:
@@ -72,7 +72,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@repo-harness/schemas':
+      '@iknowkungfu/schemas':
         specifier: workspace:*
         version: link:../schemas
       es-module-lexer:
@@ -96,10 +96,10 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)
-      '@repo-harness/core':
+      '@iknowkungfu/core':
         specifier: workspace:*
         version: link:../core
-      '@repo-harness/schemas':
+      '@iknowkungfu/schemas':
         specifier: workspace:*
         version: link:../schemas
       zod:

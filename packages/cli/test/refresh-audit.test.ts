@@ -7,14 +7,14 @@ import { fixture, runCli } from "./util";
 const repo = mkdtempSync(path.join(tmpdir(), "rh-refresh-"));
 afterAll(() => rmSync(repo, { recursive: true, force: true }));
 const read = (rel: string) => readFileSync(path.join(repo, rel), "utf8");
-const contextPath = ".repo-harness/docs/PROJECT_CONTEXT.md";
+const contextPath = ".iknowkungfu/docs/PROJECT_CONTEXT.md";
 
 beforeAll(async () => {
   cpSync(fixture("nextjs-pnpm"), repo, { recursive: true });
   await runCli(["init", "--yes", "--cwd", repo]);
 }, 60_000);
 
-describe("repo-harness refresh (built binary)", () => {
+describe("iknowkungfu refresh (built binary)", () => {
   it("no-op on an unchanged repo; --check exits 0", async () => {
     const res = await runCli(["refresh", "--cwd", repo]);
     expect(res.code).toBe(0);
@@ -44,7 +44,7 @@ describe("repo-harness refresh (built binary)", () => {
     const after = read(contextPath);
     expect(after).toContain("| format | `pnpm format` |");
     // Non-stale blocks byte-identical:
-    const block = (content: string, id: string) => content.split(`id=${id}`)[1]?.split("<!-- rh:end -->")[0];
+    const block = (content: string, id: string) => content.split(`id=${id}`)[1]?.split("<!-- kungfu:end -->")[0];
     for (const id of ["layout", "entrypoints", "conventions"]) {
       expect(block(after, id), id).toBe(block(before, id));
     }
@@ -57,7 +57,7 @@ describe("repo-harness refresh (built binary)", () => {
   });
 });
 
-describe("repo-harness audit (built binary)", () => {
+describe("iknowkungfu audit (built binary)", () => {
   it("clean harness → OK, exit 0", async () => {
     const res = await runCli(["audit", "--cwd", repo]);
     expect(res.code).toBe(0);
@@ -76,14 +76,14 @@ describe("repo-harness audit (built binary)", () => {
     const res = await runCli(["audit", "--cwd", repo]);
     expect(res.code).toBe(1);
     expect(res.stdout).toContain("stale");
-    expect(res.stdout).toContain("repo-harness refresh");
+    expect(res.stdout).toContain("iknowkungfu refresh");
     await runCli(["refresh", "--cwd", repo]);
     expect((await runCli(["audit", "--cwd", repo])).code).toBe(0);
   });
 
   it("corrupted marker → integrity finding with --force fix", async () => {
     const original = read(contextPath);
-    writeFileSync(path.join(repo, contextPath), original.replace("<!-- rh:end -->", ""));
+    writeFileSync(path.join(repo, contextPath), original.replace("<!-- kungfu:end -->", ""));
     const res = await runCli(["audit", "--cwd", repo]);
     expect(res.code).toBe(1);
     expect(res.stdout).toContain("integrity");
@@ -92,11 +92,11 @@ describe("repo-harness audit (built binary)", () => {
   });
 
   it("missing shim → presence finding pointing at adapt", async () => {
-    rmSync(path.join(repo, ".cursor/rules/repo-harness.mdc"));
+    rmSync(path.join(repo, ".cursor/rules/iknowkungfu.mdc"));
     const res = await runCli(["audit", "--cwd", repo]);
     expect(res.code).toBe(1);
-    expect(res.stdout).toContain("missing: .cursor/rules/repo-harness.mdc");
-    expect(res.stdout).toContain("repo-harness adapt");
+    expect(res.stdout).toContain("missing: .cursor/rules/iknowkungfu.mdc");
+    expect(res.stdout).toContain("iknowkungfu adapt");
     await runCli(["adapt", "--client", "cursor", "--cwd", repo]);
   });
 });

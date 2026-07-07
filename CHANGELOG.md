@@ -1,13 +1,26 @@
 # Changelog
 
-## 1.0.1 — 2026-07-07
+## 1.1.0 — 2026-07-07
+
+**Renamed: `repo-harness-cli` → `iknowkungfu`.** Same tool, better name — it downloads knowledge of your repo straight into your agent's head.
+
+- npm package: `iknowkungfu` (install `repo-harness-cli` is deprecated with a pointer here)
+- Commands: `iknowkungfu` with short alias `kungfu` (previously `repo-harness` / `rh`)
+- Harness directory: `.iknowkungfu/` (previously `.repo-harness/`)
+- Marker blocks: `<!-- kungfu:begin -->` / `<!-- kungfu:end -->` (previously `rh:`)
+- MCP server name: `iknowkungfu`
+- Repo: https://github.com/danielproxd2/iknowkungfu (old URL redirects)
+
+If you ran the old version: delete `.repo-harness/` and the old shims, then `npx iknowkungfu init`.
+
+## 1.0.1 — 2026-07-07 (as `repo-harness-cli`)
 
 - **Fix:** `verify` now kills the entire process tree when a command hits its timeout. Previously only the wrapping shell was killed, so on Linux and Windows a hung command survived, held the output pipes, and `verify` hung with it (macOS was unaffected). POSIX commands now run in their own process group and the group gets SIGKILL; Windows uses `taskkill /T /F`.
 - CI: monorepo dev loop tested on Node 22/24 (pnpm 11 requires ≥ 22.13); the published CLI's Node 20 support is covered by a dedicated packed-tarball smoke job.
 
-## 1.0.0 — 2026-07-07
+## 1.0.0 — 2026-07-07 (as `repo-harness-cli`)
 
-First public release, published to npm as **`repo-harness-cli`** (the name `repo-harness` was already taken on the registry; the installed commands are still `repo-harness` and `rh`).
+First public release, published to npm as **`repo-harness-cli`** (the name `repo-harness` was already taken on the registry). Installed commands at the time: `repo-harness` and `rh`.
 
 Everything below is relative to nothing — this is the initial release. Highlights:
 

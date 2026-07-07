@@ -3,7 +3,7 @@ import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { VerificationResult } from "@repo-harness/schemas";
+import type { VerificationResult } from "@iknowkungfu/schemas";
 import { fixture, runCli } from "./util";
 
 const repo = mkdtempSync(path.join(tmpdir(), "rh-verify-"));
@@ -21,7 +21,7 @@ beforeAll(async () => {
   await runCli(["init", "--yes", "--clients", "agents-md", "--cwd", repo]);
 }, 60_000);
 
-describe("repo-harness verify (built binary, real execution)", () => {
+describe("iknowkungfu verify (built binary, real execution)", () => {
   it("baseline passes on a green tree", async () => {
     const res = await runCli(["verify", "--baseline", "--json", "--cwd", repo]);
     expect(res.code).toBe(0);
@@ -47,10 +47,10 @@ describe("repo-harness verify (built binary, real execution)", () => {
   }, 60_000);
 
   it("times out a hung command and reports it, exit 1", async () => {
-    mkdirSync(path.join(repo, ".repo-harness"), { recursive: true });
+    mkdirSync(path.join(repo, ".iknowkungfu"), { recursive: true });
     writeFileSync(path.join(repo, "hang.mjs"), "setTimeout(() => {}, 60_000);\n");
     writeFileSync(
-      path.join(repo, ".repo-harness/config.json"),
+      path.join(repo, ".iknowkungfu/config.json"),
       JSON.stringify({ commandOverrides: [{ kind: "test", command: "node hang.mjs", source: "test-override" }] }),
     );
     await runCli(["scan", "--cwd", repo]); // config changed → refresh manifest
@@ -62,7 +62,7 @@ describe("repo-harness verify (built binary, real execution)", () => {
 
   it("missing tool → status not-found and exit 3 (distinct from test failure)", async () => {
     writeFileSync(
-      path.join(repo, ".repo-harness/config.json"),
+      path.join(repo, ".iknowkungfu/config.json"),
       JSON.stringify({ commandOverrides: [{ kind: "test", command: "definitely-not-a-real-tool-xyz --run", source: "test-override" }] }),
     );
     await runCli(["scan", "--cwd", repo]);
@@ -70,7 +70,7 @@ describe("repo-harness verify (built binary, real execution)", () => {
     expect(res.code).toBe(3);
     expect(res.stderr).toContain("override the command");
     // Clean up the override for any later tests.
-    writeFileSync(path.join(repo, ".repo-harness/config.json"), "{}");
+    writeFileSync(path.join(repo, ".iknowkungfu/config.json"), "{}");
     await runCli(["scan", "--cwd", repo]);
   }, 30_000);
 

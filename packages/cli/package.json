@@ -1,17 +1,17 @@
 {
-  "name": "repo-harness-cli",
-  "version": "1.0.1",
+  "name": "iknowkungfu",
+  "version": "1.1.0",
   "description": "Turn any repository into an AI-ready workspace: precomputed context, exact commands, verification, and risk guardrails for coding agents.",
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielproxd2/repo-harness.git",
+    "url": "git+https://github.com/danielproxd2/iknowkungfu.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/danielproxd2/repo-harness#readme",
+  "homepage": "https://github.com/danielproxd2/iknowkungfu#readme",
   "bugs": {
-    "url": "https://github.com/danielproxd2/repo-harness/issues"
+    "url": "https://github.com/danielproxd2/iknowkungfu/issues"
   },
   "keywords": [
     "ai",
@@ -25,8 +25,8 @@
     "developer-tools"
   ],
   "bin": {
-    "repo-harness": "dist/index.js",
-    "rh": "dist/index.js"
+    "iknowkungfu": "dist/index.js",
+    "kungfu": "dist/index.js"
   },
   "files": [
     "dist"
@@ -48,10 +48,10 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@repo-harness/adapters": "workspace:*",
-    "@repo-harness/core": "workspace:*",
-    "@repo-harness/mcp": "workspace:*",
-    "@repo-harness/schemas": "workspace:*",
+    "@iknowkungfu/adapters": "workspace:*",
+    "@iknowkungfu/core": "workspace:*",
+    "@iknowkungfu/mcp": "workspace:*",
+    "@iknowkungfu/schemas": "workspace:*",
     "tsdown": "^0.22.3"
   }
 }

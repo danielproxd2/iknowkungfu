@@ -51,7 +51,7 @@ function mappingBlock(ctx: DocContext): ArtifactBlock {
     ...(lines.length > 0 ? lines : ["- no import-linked tests found"]),
     "",
     untested.length > 0
-      ? `⚠ ${untested.length} core file(s) have NO covering test — full list: \`repo-harness audit --untested\``
+      ? `⚠ ${untested.length} core file(s) have NO covering test — full list: \`iknowkungfu audit --untested\``
       : "All core files have at least one covering test.",
   ].join("\n");
   return { id: "mapping", inputs: blockHash({ lines, untested: untested.length }), content };
@@ -73,7 +73,7 @@ function rulesBlock(ctx: DocContext): ArtifactBlock {
 export function testOracleArtifact(ctx: DocContext): GeneratedArtifact {
   return {
     id: "test-oracle",
-    path: ".repo-harness/docs/TEST_ORACLE.md",
+    path: ".iknowkungfu/docs/TEST_ORACLE.md",
     blocks: [
       { id: "title", inputs: blockHash("title-v1"), content: "# Test Oracle" },
       matrixBlock(ctx),

@@ -3,33 +3,33 @@
 Every output below is real, captured by running the built binary against `fixtures/exec-node`
 (a minimal repo whose catalog commands actually execute). Reproduce with the same steps.
 
-## 1. `repo-harness init --yes`
+## 1. `iknowkungfu init --yes`
 
 ```
-Repo Harness v1.0.1 — init
+iknowkungfu v1.1.0 — init
 ✔ Detected: vitest@2.0.0 · JavaScript 100% · node
 ✔ Command catalog: 4 detected, 1 inferred
 ✔ Mapped 6 files · 3 entrypoints
 ⚠ 3 core file(s) without tests
 
-  written: .repo-harness/manifest.json
-  written: .repo-harness/map.json
-  written: .repo-harness/docs/PROJECT_CONTEXT.md
-  written: .repo-harness/docs/AGENT_RUNBOOK.md
-  written: .repo-harness/docs/TEST_ORACLE.md
-  written: .repo-harness/docs/DEBUGGING_PLAYBOOKS.md
-  written: .repo-harness/docs/REFACTOR_GUARDRAILS.md
-  written: .repo-harness/docs/PROMPTS.md
+  written: .iknowkungfu/manifest.json
+  written: .iknowkungfu/map.json
+  written: .iknowkungfu/docs/PROJECT_CONTEXT.md
+  written: .iknowkungfu/docs/AGENT_RUNBOOK.md
+  written: .iknowkungfu/docs/TEST_ORACLE.md
+  written: .iknowkungfu/docs/DEBUGGING_PLAYBOOKS.md
+  written: .iknowkungfu/docs/REFACTOR_GUARDRAILS.md
+  written: .iknowkungfu/docs/PROMPTS.md
   written: AGENTS.md
   written: CLAUDE.md
-  written: .codex/skills/repo-harness/SKILL.md
-  written: .cursor/rules/repo-harness.mdc
+  written: .codex/skills/iknowkungfu/SKILL.md
+  written: .cursor/rules/iknowkungfu.mdc
   written: .github/copilot-instructions.md
 
-Claude Code MCP: merge into .mcp.json → {"mcpServers":{"repo-harness":{"command":"repo-harness","args":["mcp"]}}}
+Claude Code MCP: merge into .mcp.json → {"mcpServers":{"iknowkungfu":{"command":"iknowkungfu","args":["mcp"]}}}
 ```
 
-## 2. `repo-harness verify --baseline` — green tree confirmed
+## 2. `iknowkungfu verify --baseline` — green tree confirmed
 
 ```
 verify (baseline): PASS in 378ms
@@ -38,7 +38,7 @@ verify (baseline): PASS in 378ms
   pass      npm test (123ms)
 ```
 
-## 3. Break `add()` (`return a - b`) → `repo-harness verify --changed` catches it
+## 3. Break `add()` (`return a - b`) → `iknowkungfu verify --changed` catches it
 
 The verify plan scopes to the covering test found via the import graph — not the whole suite:
 
@@ -51,7 +51,7 @@ verify (changed): FAIL in 372ms
 exit=1
 ```
 
-## 4. Delete a test + add a debug statement, stage → `repo-harness risk --staged`
+## 4. Delete a test + add a debug statement, stage → `iknowkungfu risk --staged`
 
 ```
 risk (staged): BLOCKED — 2 files, +1/-2
@@ -65,29 +65,29 @@ warning   debug-statement  src/calc.mjs         Added a debug statement (console
 exit=1
 ```
 
-## 5. Add a `format` script to package.json → `repo-harness refresh`
+## 5. Add a `format` script to package.json → `iknowkungfu refresh`
 
 `refresh --check` exits 1 (CI-detectable staleness). `refresh` rewrites only the stale blocks:
 
 ```
-refreshed: .repo-harness/manifest.json
-refreshed: .repo-harness/map.json
-refreshed: .repo-harness/docs/PROJECT_CONTEXT.md [commands, entrypoints]
+refreshed: .iknowkungfu/manifest.json
+refreshed: .iknowkungfu/map.json
+refreshed: .iknowkungfu/docs/PROJECT_CONTEXT.md [commands, entrypoints]
 ```
 
 The other five docs are byte-untouched. `git diff --stat`:
 
 ```
- .repo-harness/docs/PROJECT_CONTEXT.md |  6 ++++--
- .repo-harness/manifest.json           | 14 ++++++++++----
- .repo-harness/map.json                | 11 ++++++++++-
+ .iknowkungfu/docs/PROJECT_CONTEXT.md |  6 ++++--
+ .iknowkungfu/manifest.json           | 14 ++++++++++----
+ .iknowkungfu/map.json                | 11 ++++++++++-
 ```
 
 And the doc diff is exactly the new catalog row (plus the new script entrypoint):
 
 ```diff
--<!-- rh:begin id=commands inputs=f341eac27318 -->
-+<!-- rh:begin id=commands inputs=fe1e60793d4d -->
+-<!-- kungfu:begin id=commands inputs=f341eac27318 -->
++<!-- kungfu:begin id=commands inputs=fe1e60793d4d -->
  ...
  | typecheck | `npm run typecheck` |  |
 +| format | `npm run format` |  |

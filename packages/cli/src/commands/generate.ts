@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { HarnessError, loadConfig } from "@repo-harness/core";
+import { HarnessError, loadConfig } from "@iknowkungfu/core";
 import { globalOpts } from "../context";
 import { docsFor, writeArtifacts } from "../generate";
 import { readManifest, readMap } from "../manifest-io";
@@ -14,7 +14,7 @@ export function registerGenerate(program: Command): void {
       const manifest = readManifest(g.root);
       const map = readMap(g.root);
       if (!manifest || !map) {
-        throw new HarnessError("usage", "No manifest/map found.", "Run `repo-harness scan` (or `init`) first.");
+        throw new HarnessError("usage", "No manifest/map found.", "Run `iknowkungfu scan` (or `init`) first.");
       }
       const { config } = loadConfig(g.root);
       const reports = writeArtifacts(g.root, docsFor(g.root, manifest, map, config), {

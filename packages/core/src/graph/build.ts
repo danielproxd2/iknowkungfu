@@ -5,7 +5,7 @@ import {
   type FileRole,
   type ProjectMap,
   type RepoManifest,
-} from "@repo-harness/schemas";
+} from "@iknowkungfu/schemas";
 import { loadConfig, type LoadedConfig } from "../config";
 import { pmName, runScript } from "../detect/js";
 import { buildFileIndex, type FileIndex } from "../fsindex";

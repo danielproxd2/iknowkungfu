@@ -1,6 +1,6 @@
 # Configuration & Artifacts
 
-## `.repo-harness/config.json`
+## `.iknowkungfu/config.json`
 
 The only file you edit by hand. Every field is optional — an empty or absent config works.
 
@@ -54,7 +54,7 @@ Four risk areas are also inferred from directory names (auth, payments, crypto/s
 ## Generated artifacts (don't edit inside blocks)
 
 ```
-.repo-harness/
+.iknowkungfu/
   manifest.json      # stack, tooling, command catalog — every fact provenance-tagged
   map.json           # file/dir roles, import graph, dependents, covering tests
   config.json        # yours (see above)
@@ -74,9 +74,9 @@ Plus the client shims at the repo root: `AGENTS.md`, `CLAUDE.md`, `.codex/skills
 Generated content lives inside marked regions:
 
 ```markdown
-<!-- rh:begin id=identity inputs=80d612f60748 -->
+<!-- kungfu:begin id=identity inputs=80d612f60748 -->
 ...generated...
-<!-- rh:end -->
+<!-- kungfu:end -->
 ```
 
 `refresh` recomputes each block's `inputs` hash and rewrites only stale blocks. Anything you write *outside* the markers survives every refresh (test-enforced). Docs are also kept under hard line budgets so they stay cheap to load into a context window.
@@ -87,4 +87,4 @@ Untagged facts were parsed from your config files — trust them. Facts marked `
 
 ## Committing
 
-Commit `.repo-harness/` and the shims. Everything is deterministic text: scans are byte-for-byte reproducible, so diffs stay clean and reviews stay meaningful.
+Commit `.iknowkungfu/` and the shims. Everything is deterministic text: scans are byte-for-byte reproducible, so diffs stay clean and reviews stay meaningful.

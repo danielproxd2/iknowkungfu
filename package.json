@@ -1,12 +1,12 @@
 {
-  "name": "repo-harness-monorepo",
+  "name": "iknowkungfu-monorepo",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "pnpm --filter repo-harness-cli build",
+    "build": "pnpm --filter iknowkungfu build",
     "typecheck": "tsc --noEmit",
     "test": "pnpm build && vitest run",
     "test:unit": "vitest run"

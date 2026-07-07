@@ -32,7 +32,7 @@ export function guardrailsArtifact(ctx: DocContext): GeneratedArtifact {
       "## Risk areas",
       ...(areaRows.length > 0
         ? ["| Paths | Why | Rule |", "|-------|-----|------|", ...areaRows]
-        : ["None declared. Add them to `.repo-harness/config.json#riskAreas` — 30 seconds that pays for itself."]),
+        : ["None declared. Add them to `.iknowkungfu/config.json#riskAreas` — 30 seconds that pays for itself."]),
     ].join("\n"),
   };
 
@@ -53,7 +53,7 @@ export function guardrailsArtifact(ctx: DocContext): GeneratedArtifact {
     id: "limits",
     inputs: blockHash(l),
     content: [
-      "## Diff limits (enforced by `repo-harness risk`)",
+      "## Diff limits (enforced by `iknowkungfu risk`)",
       `warning: >${l.warnFiles} files or >${l.warnLines} lines · blocker: >${l.blockFiles} files or >${l.blockLines} lines`,
       "Rename + edit in one commit = warning (unreviewable). Refactors of risk areas need their own PR.",
     ].join("\n"),
@@ -61,7 +61,7 @@ export function guardrailsArtifact(ctx: DocContext): GeneratedArtifact {
 
   return {
     id: "refactor-guardrails",
-    path: ".repo-harness/docs/REFACTOR_GUARDRAILS.md",
+    path: ".iknowkungfu/docs/REFACTOR_GUARDRAILS.md",
     blocks: [{ id: "title", inputs: blockHash("title-v1"), content: "# Refactor Guardrails" }, areasBlock, blastBlock, limitsBlock],
     ownership: "managed-file",
     lineBudget: BUDGET,

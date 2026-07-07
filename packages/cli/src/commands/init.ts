@@ -2,9 +2,9 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import readline from "node:readline/promises";
 import type { Command } from "commander";
-import { CONFIG_PATH, HARNESS_DIR, HarnessError } from "@repo-harness/core";
-import { MCP_JSON_SNIPPET } from "@repo-harness/adapters";
-import { ALL_CLIENTS, type RiskArea } from "@repo-harness/schemas";
+import { CONFIG_PATH, HARNESS_DIR, HarnessError } from "@iknowkungfu/core";
+import { MCP_JSON_SNIPPET } from "@iknowkungfu/adapters";
+import { ALL_CLIENTS, type RiskArea } from "@iknowkungfu/schemas";
 import { parseClients } from "./adapt";
 import { globalOpts } from "../context";
 import { runPipeline, writeAdapters } from "../pipeline";
@@ -36,7 +36,7 @@ export function registerInit(program: Command): void {
     .action(async (opts: { yes?: boolean; clients: string; mcpHint: boolean }, cmd: Command) => {
       const g = globalOpts(cmd);
       if (existsSync(path.join(g.root, HARNESS_DIR))) {
-        throw new HarnessError("usage", `${HARNESS_DIR}/ already exists.`, "Run `repo-harness refresh` to update it.");
+        throw new HarnessError("usage", `${HARNESS_DIR}/ already exists.`, "Run `iknowkungfu refresh` to update it.");
       }
       const clients = parseClients([opts.clients]);
       const riskAreas = !opts.yes && process.stdin.isTTY && !g.quiet ? await promptRiskAreas() : [];
@@ -55,7 +55,7 @@ export function registerInit(program: Command): void {
       if (g.quiet) return;
       const detected = ctx.manifest.commands.commands.filter((c) => c.provenance === "detected").length;
       const inferred = ctx.manifest.commands.commands.length - detected;
-      console.log(`Repo Harness v${ctx.manifest.harnessVersion} — init`);
+      console.log(`iknowkungfu v${ctx.manifest.harnessVersion} — init`);
       console.log(`✔ Detected: ${summarizeStack(ctx.manifest)}`);
       console.log(`✔ Command catalog: ${detected} detected, ${inferred} inferred`);
       console.log(`✔ Mapped ${ctx.map.files.length} files · ${ctx.map.entrypoints.length} entrypoints`);
@@ -66,6 +66,6 @@ export function registerInit(program: Command): void {
       if (clients.includes("claude") && opts.mcpHint) {
         console.log(`\nClaude Code MCP: merge into .mcp.json → ${MCP_JSON_SNIPPET}`);
       }
-      console.log("\nDone. Commit .repo-harness/ and the shims — your whole team's agents get them for free.");
+      console.log("\nDone. Commit .iknowkungfu/ and the shims — your whole team's agents get them for free.");
     });
 }

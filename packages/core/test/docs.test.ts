@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseConfig } from "@repo-harness/schemas";
-import { buildMap, generateDocs, inferRiskAreas, mergeArtifact, scan } from "@repo-harness/core";
+import { parseConfig } from "@iknowkungfu/schemas";
+import { buildMap, generateDocs, inferRiskAreas, mergeArtifact, scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const root = fixture("nextjs-pnpm");
@@ -44,7 +44,7 @@ describe("full doc set", () => {
     for (const m of oracle.matchAll(/`([^`]+)`/g)) {
       const cmd = m[1]!;
       // Paths and placeholders in the left column aren't commands.
-      if (cmd.startsWith("repo-harness") || cmd.includes("audit") || !cmd.includes(" ")) continue;
+      if (cmd.startsWith("iknowkungfu") || cmd.includes("audit") || !cmd.includes(" ")) continue;
       expect(known.has(cmd), `phantom command: ${cmd}`).toBe(true);
     }
   });
@@ -75,7 +75,7 @@ describe("full doc set", () => {
   it("prompts: parameterized and runbook-bound", () => {
     const pr = rendered.get("prompts")!;
     expect(pr).toContain("{DESCRIPTION}");
-    expect(pr).toContain("repo-harness verify --changed");
+    expect(pr).toContain("iknowkungfu verify --changed");
     expect(pr.match(/^## /gm)?.length).toBe(3);
   });
 

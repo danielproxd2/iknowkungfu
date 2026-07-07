@@ -1,15 +1,15 @@
 {
-  "name": "@repo-harness/mcp",
-  "version": "1.0.1",
+  "name": "@iknowkungfu/mcp",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@iknowkungfu/core": "workspace:*",
+    "@iknowkungfu/schemas": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "@repo-harness/core": "workspace:*",
-    "@repo-harness/schemas": "workspace:*",
     "zod": "^4.4.3"
   },
   "devDependencies": {

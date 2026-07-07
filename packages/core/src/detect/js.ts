@@ -1,4 +1,4 @@
-import type { CatalogCommand, CommandKind, Fact } from "@repo-harness/schemas";
+import type { CatalogCommand, CommandKind, Fact } from "@iknowkungfu/schemas";
 import type { FileIndex } from "../fsindex";
 import { EMPTY_DETECTION, framework, type StackDetection } from "./types";
 

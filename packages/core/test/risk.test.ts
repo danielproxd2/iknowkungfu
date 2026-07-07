@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseConfig } from "@repo-harness/schemas";
-import { buildMap, riskCheck, scan, type ParsedDiffFile } from "@repo-harness/core";
+import { parseConfig } from "@iknowkungfu/schemas";
+import { buildMap, riskCheck, scan, type ParsedDiffFile } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const root = fixture("nextjs-pnpm");

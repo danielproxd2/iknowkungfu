@@ -3,7 +3,7 @@ import {
   SCHEMA_VERSION,
   type CommandRunResult,
   type VerificationResult,
-} from "@repo-harness/schemas";
+} from "@iknowkungfu/schemas";
 import { parseFailures, tail } from "./parsers";
 import type { VerifyPlan } from "./plan";
 

@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import type { Command } from "commander";
-import { HARNESS_DIR, HarnessError } from "@repo-harness/core";
+import { HARNESS_DIR, HarnessError } from "@iknowkungfu/core";
 import { globalOpts } from "../context";
 import { runPipeline, writeAdapters } from "../pipeline";
 
@@ -14,7 +14,7 @@ export function registerRefresh(program: Command): void {
     .action(async (opts: { force?: boolean; check?: boolean }, cmd: Command) => {
       const g = globalOpts(cmd);
       if (!existsSync(path.join(g.root, HARNESS_DIR))) {
-        throw new HarnessError("usage", `No ${HARNESS_DIR}/ here.`, "Run `repo-harness init` first.");
+        throw new HarnessError("usage", `No ${HARNESS_DIR}/ here.`, "Run `iknowkungfu init` first.");
       }
       const dryRun = g.dryRun || opts.check === true;
       const { ctx, reports } = await runPipeline(g.root, { ...g, dryRun }, { force: opts.force });

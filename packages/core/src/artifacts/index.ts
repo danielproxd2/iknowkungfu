@@ -1,4 +1,4 @@
-import type { HarnessConfig, ProjectMap, RepoManifest } from "@repo-harness/schemas";
+import type { HarnessConfig, ProjectMap, RepoManifest } from "@iknowkungfu/schemas";
 import type { DocContext } from "./context";
 import { guardrailsArtifact } from "./guardrails";
 import { playbooksArtifact } from "./playbooks";

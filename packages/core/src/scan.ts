@@ -3,7 +3,7 @@ import {
   SCHEMA_VERSION,
   type CatalogCommand,
   type RepoManifest,
-} from "@repo-harness/schemas";
+} from "@iknowkungfu/schemas";
 import { loadConfig, type LoadedConfig } from "./config";
 import { detectEnv } from "./detect/env";
 import { detectJs } from "./detect/js";

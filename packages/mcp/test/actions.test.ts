@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { riskReportSchema, verificationResultSchema } from "@repo-harness/schemas";
-import { createServer, invalidateStaleCache } from "@repo-harness/mcp";
+import { riskReportSchema, verificationResultSchema } from "@iknowkungfu/schemas";
+import { createServer, invalidateStaleCache } from "@iknowkungfu/mcp";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixture = (name: string) => path.resolve(here, "../../../fixtures", name);

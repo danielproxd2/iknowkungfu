@@ -2,7 +2,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { changedFiles, parseDiff, planSmallPr, planVerify, riskCheck, runVerify } from "@repo-harness/core";
+import { changedFiles, parseDiff, planSmallPr, planVerify, riskCheck, runVerify } from "@iknowkungfu/core";
 import { err, ok } from "./payload";
 import { invalidateStaleCache } from "./state";
 import { withState } from "./read-tools";
@@ -11,7 +11,7 @@ const pexec = promisify(execFile);
 
 export interface ActionToolOptions {
   readonly?: boolean;
-  /** Path to the repo-harness CLI entry (refresh_context shells out to keep the single write choke point). */
+  /** Path to the iknowkungfu CLI entry (refresh_context shells out to keep the single write choke point). */
   cliPath?: string;
 }
 
@@ -74,7 +74,7 @@ export function registerActionTools(server: McpServer, root: string, opts: Actio
       },
       async ({ force }: { force?: boolean }) => {
         const cliPath = opts.cliPath ?? process.argv[1];
-        if (!cliPath) return err({ code: "env", message: "CLI path unknown; cannot refresh.", fix: "Run `repo-harness refresh` in a terminal." });
+        if (!cliPath) return err({ code: "env", message: "CLI path unknown; cannot refresh.", fix: "Run `iknowkungfu refresh` in a terminal." });
         try {
           const { stdout } = await pexec(
             process.execPath,
@@ -85,7 +85,7 @@ export function registerActionTools(server: McpServer, root: string, opts: Actio
           return { content: [{ type: "text" as const, text: stdout.trim() }] };
         } catch (e) {
           const detail = (e as { stderr?: string; message?: string }).stderr || (e as Error).message;
-          return err({ code: "env", message: `refresh failed: ${detail.split("\n")[0]}`, fix: "Run `repo-harness refresh` in a terminal to see full output." });
+          return err({ code: "env", message: `refresh failed: ${detail.split("\n")[0]}`, fix: "Run `iknowkungfu refresh` in a terminal to see full output." });
         }
       },
     );

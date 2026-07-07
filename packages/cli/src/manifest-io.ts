@@ -1,5 +1,5 @@
-import { MANIFEST_PATH, MAP_PATH } from "@repo-harness/core";
-import { parseManifest, parseMap, type ProjectMap, type RepoManifest } from "@repo-harness/schemas";
+import { MANIFEST_PATH, MAP_PATH } from "@iknowkungfu/core";
+import { parseManifest, parseMap, type ProjectMap, type RepoManifest } from "@iknowkungfu/schemas";
 import { readRepoFile, writeManaged, type WriteResult } from "./write";
 
 export function readManifest(root: string): RepoManifest | null {

@@ -7,8 +7,8 @@ import {
   loadConfig,
   mergeArtifact,
   staleBlockIds,
-} from "@repo-harness/core";
-import { adapterArtifact } from "@repo-harness/adapters";
+} from "@iknowkungfu/core";
+import { adapterArtifact } from "@iknowkungfu/adapters";
 import { globalOpts } from "../context";
 import { requireContext } from "./adapt";
 import { readRepoFile } from "../write";
@@ -33,11 +33,11 @@ export function registerAudit(program: Command): void {
       const loaded = loadConfig(g.root);
       const index = await buildFileIndex(g.root, { excludes: loaded.config.excludes });
       if (computeInputsHash(index, loaded.raw) !== ctx.manifest.inputsHash) {
-        findings.push({ check: "staleness", problem: "manifest is stale vs tracked inputs", fix: "repo-harness refresh" });
+        findings.push({ check: "staleness", problem: "manifest is stale vs tracked inputs", fix: "iknowkungfu refresh" });
       }
       // 2. Map built from this manifest.
       if (ctx.map.builtFromManifest !== ctx.manifest.inputsHash) {
-        findings.push({ check: "map-sync", problem: "map.json was built from a different manifest", fix: "repo-harness refresh" });
+        findings.push({ check: "map-sync", problem: "map.json was built from a different manifest", fix: "iknowkungfu refresh" });
       }
       // 3. Marker integrity + per-block staleness + budgets for docs and shims.
       const artifacts = [
@@ -50,18 +50,18 @@ export function registerAudit(program: Command): void {
           findings.push({
             check: "presence",
             problem: `missing: ${artifact.path}`,
-            fix: artifact.path.startsWith(".repo-harness/") ? "repo-harness refresh" : "repo-harness adapt",
+            fix: artifact.path.startsWith(".iknowkungfu/") ? "iknowkungfu refresh" : "iknowkungfu adapt",
           });
           continue;
         }
         try {
           mergeArtifact(existing, artifact); // throws on corrupted markers
           if (staleBlockIds(existing, artifact).length > 0) {
-            findings.push({ check: "staleness", problem: `stale blocks in ${artifact.path}`, fix: "repo-harness refresh" });
+            findings.push({ check: "staleness", problem: `stale blocks in ${artifact.path}`, fix: "iknowkungfu refresh" });
           }
         } catch (e) {
           if (!(e instanceof BlockCorruptionError)) throw e;
-          findings.push({ check: "integrity", problem: e.message, fix: "repo-harness refresh --force" });
+          findings.push({ check: "integrity", problem: e.message, fix: "iknowkungfu refresh --force" });
         }
         if (existing.split("\n").length > artifact.lineBudget + 2) {
           findings.push({

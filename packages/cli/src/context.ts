@@ -1,7 +1,7 @@
 import { statSync } from "node:fs";
 import path from "node:path";
 import type { Command } from "commander";
-import { HarnessError } from "@repo-harness/core";
+import { HarnessError } from "@iknowkungfu/core";
 
 export interface GlobalOpts {
   json: boolean;

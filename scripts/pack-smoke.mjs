@@ -29,7 +29,7 @@ try {
     shell: process.platform === "win32",
   });
 
-  const bin = path.join(install, "node_modules", "repo-harness-cli", "dist", "index.js");
+  const bin = path.join(install, "node_modules", "iknowkungfu", "dist", "index.js");
   for (const [dir, expect] of [
     ["nextjs", "pnpm@9.6.0"],
     ["fastapi", "poetry"],
@@ -37,7 +37,7 @@ try {
     const target = path.join(install, dir);
     const out = run(process.execPath, [bin, "init", "--yes", "--cwd", target]);
     if (!out.includes(expect)) throw new Error(`${dir}: expected '${expect}' in init output:\n${out}`);
-    for (const rel of [".repo-harness/manifest.json", ".repo-harness/docs/PROJECT_CONTEXT.md", "AGENTS.md"]) {
+    for (const rel of [".iknowkungfu/manifest.json", ".iknowkungfu/docs/PROJECT_CONTEXT.md", "AGENTS.md"]) {
       if (!existsSync(path.join(target, rel))) throw new Error(`${dir}: missing ${rel} after init`);
     }
     console.log(`pack-smoke: ${dir} OK (${expect})`);

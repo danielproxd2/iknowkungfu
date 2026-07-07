@@ -1,9 +1,9 @@
 # CLI Reference
 
-Installed as `repo-harness` with the short alias `rh` (identical). Every command below works with the global options.
+Installed as `iknowkungfu` with the short alias `kungfu` (identical). Every command below works with the global options.
 
 ```
-npm install -g repo-harness-cli
+npm install -g iknowkungfu
 ```
 
 ## Global options
@@ -29,7 +29,7 @@ Consistent across all commands, designed for CI and agent harnesses:
 
 ---
 
-## `repo-harness init`
+## `iknowkungfu init`
 
 One-shot setup: scan, generate docs, write client adapters. Idempotent — safe to re-run.
 
@@ -39,18 +39,18 @@ One-shot setup: scan, generate docs, write client adapters. Idempotent — safe 
 | `--clients <list>` | Comma-separated clients (default: `agents-md,claude,codex,cursor,copilot`) |
 | `--no-mcp-hint` | Skip the `.mcp.json` registration hint |
 
-Writes `.repo-harness/{manifest,map,config}.json`, six docs under `.repo-harness/docs/`, and the client shims. Commit all of it — your whole team's agents get the harness for free.
+Writes `.iknowkungfu/{manifest,map,config}.json`, six docs under `.iknowkungfu/docs/`, and the client shims. Commit all of it — your whole team's agents get the harness for free.
 
-## `repo-harness scan`
+## `iknowkungfu scan`
 
-Detect stack, commands, and structure; write `.repo-harness/{manifest,map}.json`. Deterministic: scanning twice produces identical bytes (test-enforced).
+Detect stack, commands, and structure; write `.iknowkungfu/{manifest,map}.json`. Deterministic: scanning twice produces identical bytes (test-enforced).
 
 | Option | Effect |
 |---|---|
 | `--print` | Print manifest JSON to stdout, write nothing |
 | `--timing` | Print scan duration |
 
-## `repo-harness refresh`
+## `iknowkungfu refresh`
 
 Re-scan and rewrite **only stale harness blocks**. Your edits outside the marked blocks always survive (test-enforced).
 
@@ -59,7 +59,7 @@ Re-scan and rewrite **only stale harness blocks**. Your edits outside the marked
 | `--force` | Rewrite all blocks from scratch |
 | `--check` | Exit 1 if anything *would* change; write nothing — wire this into CI or pre-commit |
 
-## `repo-harness generate`
+## `iknowkungfu generate`
 
 Render harness docs from the current manifest and map (without re-scanning).
 
@@ -67,7 +67,7 @@ Render harness docs from the current manifest and map (without re-scanning).
 |---|---|
 | `--force` | Rewrite all blocks, discarding existing block bodies |
 
-## `repo-harness audit`
+## `iknowkungfu audit`
 
 Harness health report: staleness, marker integrity, shim coverage, doc line budgets.
 
@@ -75,7 +75,7 @@ Harness health report: staleness, marker integrity, shim coverage, doc line budg
 |---|---|
 | `--untested` | Also list core files no test covers |
 
-## `repo-harness adapt`
+## `iknowkungfu adapt`
 
 Write client shims: `AGENTS.md`, `CLAUDE.md`, Codex skill, Cursor rule, Copilot instructions.
 
@@ -85,7 +85,7 @@ Write client shims: `AGENTS.md`, `CLAUDE.md`, Codex skill, Cursor rule, Copilot 
 | `--list` | Show adapter status without writing |
 | `--remove <name>` | Remove a client's shim (or its harness block) |
 
-## `repo-harness verify`
+## `iknowkungfu verify`
 
 Run the right checks for a changeset; structured pass/fail. Maps your changed files through the import graph to the covering tests and runs exactly the right commands, cheap checks first. Reports an `uncovered` list — files no test covers — as an honesty channel.
 
@@ -97,9 +97,9 @@ Run the right checks for a changeset; structured pass/fail. Maps your changed fi
 | `--files <paths...>` | Explicit changed files (overrides git detection) |
 | `--timeout <sec>` | Per-command timeout in seconds (default 600). Hung commands are killed — the whole process tree, on every platform |
 
-Exit: `1` if any command failed or timed out, `3` if a catalog command isn't installed on this machine (fix: install it, or override the command in `.repo-harness/config.json`).
+Exit: `1` if any command failed or timed out, `3` if a catalog command isn't installed on this machine (fix: install it, or override the command in `.iknowkungfu/config.json`).
 
-## `repo-harness risk`
+## `iknowkungfu risk`
 
 Deterministic risk report for a diff — a pre-commit gate with no model in the loop. Checks: declared risk-area paths, deleted tests, oversized diffs, lockfile churn, debug statements. Every finding comes with a literal next action.
 
@@ -111,9 +111,9 @@ Deterministic risk report for a diff — a pre-commit gate with no model in the 
 
 Exit: `1` when blocked (or on warnings with `--strict`).
 
-## `repo-harness mcp`
+## `iknowkungfu mcp`
 
-Serve the repo-harness MCP server over stdio. Not run by hand — launched by MCP clients; see [MCP.md](MCP.md).
+Serve the iknowkungfu MCP server over stdio. Not run by hand — launched by MCP clients; see [MCP.md](MCP.md).
 
 | Option | Effect |
 |---|---|
@@ -126,8 +126,8 @@ Serve the repo-harness MCP server over stdio. Not run by hand — launched by MC
 Every command accepts `--json` and emits a single JSON document on stdout — including on failure, so agents can parse errors instead of scraping stderr:
 
 ```bash
-repo-harness verify --changed --json
-repo-harness risk --staged --json
+iknowkungfu verify --changed --json
+iknowkungfu risk --staged --json
 ```
 
 Failure payloads carry `code` (`findings` | `usage` | `env`), `message`, and a `fix` field with the literal next action.
@@ -135,7 +135,7 @@ Failure payloads carry `code` (`findings` | `usage` | `env`), `message`, and a `
 ## Typical CI wiring
 
 ```yaml
-- run: repo-harness refresh --check   # harness docs must not be stale
-- run: repo-harness risk --range origin/main..HEAD --strict
-- run: repo-harness verify --full
+- run: iknowkungfu refresh --check   # harness docs must not be stale
+- run: iknowkungfu risk --range origin/main..HEAD --strict
+- run: iknowkungfu verify --full
 ```

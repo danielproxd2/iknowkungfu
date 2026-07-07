@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { buildMap, loadConfig, scan } from "@repo-harness/core";
+import { buildMap, loadConfig, scan } from "@iknowkungfu/core";
 import { globalOpts } from "../context";
 import { readManifest, writeManifest, writeMap } from "../manifest-io";
 import { printScanSummary } from "../output";
@@ -7,7 +7,7 @@ import { printScanSummary } from "../output";
 export function registerScan(program: Command): void {
   program
     .command("scan")
-    .description("Detect stack, commands, and structure; write .repo-harness/{manifest,map}.json")
+    .description("Detect stack, commands, and structure; write .iknowkungfu/{manifest,map}.json")
     .option("--print", "print manifest JSON to stdout, write nothing")
     .option("--timing", "print scan duration")
     .action(async (opts: { print?: boolean; timing?: boolean }, cmd: Command) => {

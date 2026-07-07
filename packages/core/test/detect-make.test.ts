@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseManifest } from "@repo-harness/schemas";
-import { scan } from "@repo-harness/core";
+import { parseManifest } from "@iknowkungfu/schemas";
+import { scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const manifest = parseManifest(await scan(fixture("makefile-only"), { now: new Date(0) }));

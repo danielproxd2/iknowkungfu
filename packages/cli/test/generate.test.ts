@@ -8,9 +8,9 @@ const repo = mkdtempSync(path.join(tmpdir(), "rh-gen-"));
 cpSync(fixture("nextjs-pnpm"), repo, { recursive: true });
 afterAll(() => rmSync(repo, { recursive: true, force: true }));
 
-const docPath = path.join(repo, ".repo-harness/docs/PROJECT_CONTEXT.md");
+const docPath = path.join(repo, ".iknowkungfu/docs/PROJECT_CONTEXT.md");
 
-describe("repo-harness generate (built binary)", () => {
+describe("iknowkungfu generate (built binary)", () => {
   it("requires a scan first", async () => {
     const res = await runCli(["generate", "--cwd", repo]);
     expect(res.code).toBe(2);
@@ -21,12 +21,12 @@ describe("repo-harness generate (built binary)", () => {
     await runCli(["scan", "--cwd", repo]);
     const first = await runCli(["generate", "--cwd", repo]);
     expect(first.code).toBe(0);
-    expect(first.stdout).toContain("written: .repo-harness/docs/PROJECT_CONTEXT.md");
-    expect(first.stdout).toContain("written: .repo-harness/docs/AGENT_RUNBOOK.md");
+    expect(first.stdout).toContain("written: .iknowkungfu/docs/PROJECT_CONTEXT.md");
+    expect(first.stdout).toContain("written: .iknowkungfu/docs/AGENT_RUNBOOK.md");
     expect(readFileSync(docPath, "utf8")).toContain("pnpm test");
 
     const second = await runCli(["generate", "--cwd", repo]);
-    expect(second.stdout).toContain("unchanged: .repo-harness/docs/PROJECT_CONTEXT.md");
+    expect(second.stdout).toContain("unchanged: .iknowkungfu/docs/PROJECT_CONTEXT.md");
   });
 
   it("preserves user edits outside blocks across regeneration", async () => {
@@ -37,7 +37,7 @@ describe("repo-harness generate (built binary)", () => {
 
   it("reports corruption with a --force fix, and --force repairs", async () => {
     const original = readFileSync(docPath, "utf8");
-    writeFileSync(docPath, original.replace("<!-- rh:end -->", ""));
+    writeFileSync(docPath, original.replace("<!-- kungfu:end -->", ""));
     const res = await runCli(["generate", "--cwd", repo]);
     expect(res.code).toBe(1);
     expect(res.stderr).toContain("--force");

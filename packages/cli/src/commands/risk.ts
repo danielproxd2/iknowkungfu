@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { parseDiff, riskCheck } from "@repo-harness/core";
+import { parseDiff, riskCheck } from "@iknowkungfu/core";
 import { requireContext } from "./adapt";
 import { globalOpts } from "../context";
 import { table } from "../output";

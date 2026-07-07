@@ -1,4 +1,4 @@
-import type { RepoManifest } from "@repo-harness/schemas";
+import type { RepoManifest } from "@iknowkungfu/schemas";
 
 export function table(rows: string[][]): string {
   if (rows.length === 0) return "";
@@ -20,7 +20,7 @@ export function summarizeStack(manifest: RepoManifest): string {
 
 export function printScanSummary(manifest: RepoManifest): void {
   const lines: string[] = [];
-  lines.push(`Repo Harness v${manifest.harnessVersion} — scan`);
+  lines.push(`iknowkungfu v${manifest.harnessVersion} — scan`);
   lines.push(`Stack: ${summarizeStack(manifest)}`);
   lines.push(`Files: ${manifest.stats.files}`);
   lines.push("");

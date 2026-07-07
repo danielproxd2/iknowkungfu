@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseMap } from "@repo-harness/schemas";
-import { buildMap, scan } from "@repo-harness/core";
+import { parseMap } from "@iknowkungfu/schemas";
+import { buildMap, scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const nextRoot = fixture("nextjs-pnpm");

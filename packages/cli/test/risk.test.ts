@@ -3,7 +3,7 @@ import { cpSync, mkdtempSync, rmSync, unlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { RiskReport } from "@repo-harness/schemas";
+import type { RiskReport } from "@iknowkungfu/schemas";
 import { fixture, runCli } from "./util";
 
 const repo = mkdtempSync(path.join(tmpdir(), "rh-risk-"));
@@ -23,7 +23,7 @@ beforeAll(async () => {
   gitq(["commit", "-qm", "harness"]);
 }, 60_000);
 
-describe("repo-harness risk (built binary, real git)", () => {
+describe("iknowkungfu risk (built binary, real git)", () => {
   it("empty staged diff → clean, exit 0", async () => {
     const res = await runCli(["risk", "--cwd", repo]);
     expect(res.code).toBe(0);

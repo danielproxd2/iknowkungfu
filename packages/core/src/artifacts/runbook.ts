@@ -1,4 +1,4 @@
-import type { CommandKind } from "@repo-harness/schemas";
+import type { CommandKind } from "@iknowkungfu/schemas";
 import { blockHash, type ArtifactBlock, type GeneratedArtifact } from "./blocks";
 import type { DocContext } from "./context";
 
@@ -11,7 +11,7 @@ function cheapChecks(ctx: DocContext): string[] {
 }
 
 export function neverEditPaths(ctx: DocContext): string[] {
-  const paths = new Set<string>([".repo-harness/ (generated)"]);
+  const paths = new Set<string>([".iknowkungfu/ (generated)"]);
   for (const area of ctx.config.riskAreas) {
     if (area.rules.some((r) => r.kind === "never-edit")) for (const p of area.paths) paths.add(`${p} (${area.reason})`);
   }
@@ -28,10 +28,10 @@ function loopBlock(ctx: DocContext): ArtifactBlock {
   const content = [
     "## The loop (follow literally)",
     "1. Read PROJECT_CONTEXT.md first. Do not explore the tree for facts it already states.",
-    "2. Before editing, confirm the repo is green: `repo-harness verify --baseline` (or MCP `verify_change` with scope `baseline`). If red, report — do not fix unrelated breakage.",
+    "2. Before editing, confirm the repo is green: `iknowkungfu verify --baseline` (or MCP `verify_change` with scope `baseline`). If red, report — do not fix unrelated breakage.",
     `3. Plan the smallest diff that satisfies the task. More than ${limits.warnFiles} files or ${limits.warnLines} changed lines → split the work (MCP \`plan_small_pr\`).`,
-    `4. Edit. After each logical change run \`repo-harness verify --changed\`${cheap.length > 0 ? ` (runs ${cheap.map((c) => `\`${c}\``).join(", ")} + scoped tests)` : ""}.`,
-    "5. Before finishing: `repo-harness risk --staged`. Address every `blocker`; mention every `warning` in your report.",
+    `4. Edit. After each logical change run \`iknowkungfu verify --changed\`${cheap.length > 0 ? ` (runs ${cheap.map((c) => `\`${c}\``).join(", ")} + scoped tests)` : ""}.`,
+    "5. Before finishing: `iknowkungfu risk --staged`. Address every `blocker`; mention every `warning` in your report.",
     "6. Report: what changed, what you ran, what passed. Claim only what you executed.",
   ].join("\n");
   return { id: "loop", inputs: blockHash({ cheap, limits }), content };
@@ -55,7 +55,7 @@ function recoveryBlock(): ArtifactBlock {
     "- A test fails and you don't know why → DEBUGGING_PLAYBOOKS.md",
     "- The change feels too big → MCP `plan_small_pr`",
     "- Unsure whether a file is safe to touch → MCP `explain_file` (role + dependents + risk)",
-    "- Harness facts look wrong or stale → `repo-harness refresh` (or MCP `refresh_context`)",
+    "- Harness facts look wrong or stale → `iknowkungfu refresh` (or MCP `refresh_context`)",
   ].join("\n");
   return { id: "recovery", inputs: blockHash("recovery-v1"), content };
 }
@@ -69,7 +69,7 @@ export function runbookArtifact(ctx: DocContext): GeneratedArtifact {
   ];
   return {
     id: "agent-runbook",
-    path: ".repo-harness/docs/AGENT_RUNBOOK.md",
+    path: ".iknowkungfu/docs/AGENT_RUNBOOK.md",
     blocks,
     ownership: "managed-file",
     lineBudget: BUDGET,

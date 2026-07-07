@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { isManagedPath } from "@repo-harness/core";
+import { isManagedPath } from "@iknowkungfu/core";
 
 export interface WriteResult {
   path: string;

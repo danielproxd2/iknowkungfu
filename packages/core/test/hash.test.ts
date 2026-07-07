@@ -2,7 +2,7 @@ import { cpSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
-import { buildFileIndex, computeInputsHash } from "@repo-harness/core";
+import { buildFileIndex, computeInputsHash } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const tmp = mkdtempSync(path.join(tmpdir(), "rh-hash-"));

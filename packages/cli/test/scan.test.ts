@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { parseManifest } from "@repo-harness/schemas";
+import { parseManifest } from "@iknowkungfu/schemas";
 import { fixture, runCli } from "./util";
 
-describe("repo-harness scan (built binary)", () => {
+describe("iknowkungfu scan (built binary)", () => {
   it("scan --print emits a schema-valid manifest", async () => {
     const res = await runCli(["scan", "--print", "--cwd", fixture("nextjs-pnpm")]);
     expect(res.code).toBe(0);
@@ -14,7 +14,7 @@ describe("repo-harness scan (built binary)", () => {
   it("scan prints a human summary by default (dry-run keeps the fixture pristine)", async () => {
     const res = await runCli(["scan", "--dry-run", "--cwd", fixture("nextjs-pnpm")]);
     expect(res.code).toBe(0);
-    expect(res.stdout).toContain("Repo Harness");
+    expect(res.stdout).toContain("iknowkungfu");
     expect(res.stdout).toContain("pnpm test");
     expect(res.stdout).toContain("detected");
   });

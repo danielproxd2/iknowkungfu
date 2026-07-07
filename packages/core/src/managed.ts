@@ -7,10 +7,10 @@ const MANAGED_FILES = new Set([
   "AGENTS.md",
   "CLAUDE.md",
   ".github/copilot-instructions.md",
-  ".cursor/rules/repo-harness.mdc",
+  ".cursor/rules/iknowkungfu.mdc",
 ]);
 
-const MANAGED_PREFIXES = [".repo-harness/", ".codex/skills/repo-harness/"];
+const MANAGED_PREFIXES = [".iknowkungfu/", ".codex/skills/iknowkungfu/"];
 
 export function isManagedPath(rel: string): boolean {
   return MANAGED_FILES.has(rel) || MANAGED_PREFIXES.some((p) => rel.startsWith(p));

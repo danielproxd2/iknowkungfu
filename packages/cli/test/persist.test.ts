@@ -2,7 +2,7 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } 
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
-import { parseManifest } from "@repo-harness/schemas";
+import { parseManifest } from "@iknowkungfu/schemas";
 import { fixture, runCli } from "./util";
 
 function tempRepo(from: string): string {
@@ -20,17 +20,17 @@ describe("scan persistence", () => {
   it("writes a valid manifest, then reports up-to-date with zero churn", async () => {
     const repo = tempRepo("nextjs-pnpm");
     repos.push(repo);
-    const manifestPath = path.join(repo, ".repo-harness/manifest.json");
+    const manifestPath = path.join(repo, ".iknowkungfu/manifest.json");
 
     const first = await runCli(["scan", "--cwd", repo]);
     expect(first.code).toBe(0);
-    expect(first.stdout).toContain("written: .repo-harness/manifest.json");
+    expect(first.stdout).toContain("written: .iknowkungfu/manifest.json");
     const bytes = readFileSync(manifestPath, "utf8");
     parseManifest(JSON.parse(bytes));
 
     const second = await runCli(["scan", "--cwd", repo]);
     expect(second.code).toBe(0);
-    expect(second.stdout).toContain("up to date: .repo-harness/manifest.json");
+    expect(second.stdout).toContain("up to date: .iknowkungfu/manifest.json");
     expect(readFileSync(manifestPath, "utf8")).toBe(bytes);
   });
 
@@ -40,20 +40,20 @@ describe("scan persistence", () => {
     const res = await runCli(["scan", "--dry-run", "--cwd", repo]);
     expect(res.code).toBe(0);
     expect(res.stdout).toContain("dry-run: would write");
-    expect(existsSync(path.join(repo, ".repo-harness"))).toBe(false);
+    expect(existsSync(path.join(repo, ".iknowkungfu"))).toBe(false);
   });
 
   it("rewrites when a tracked input changes", async () => {
     const repo = tempRepo("nextjs-pnpm");
     repos.push(repo);
     await runCli(["scan", "--cwd", repo]);
-    const before = JSON.parse(readFileSync(path.join(repo, ".repo-harness/manifest.json"), "utf8")) as {
+    const before = JSON.parse(readFileSync(path.join(repo, ".iknowkungfu/manifest.json"), "utf8")) as {
       inputsHash: string;
     };
     writeFileSync(path.join(repo, "package.json"), '{"name":"acme-shop","scripts":{"test":"vitest run"}}\n');
     const res = await runCli(["scan", "--cwd", repo]);
-    expect(res.stdout).toContain("written: .repo-harness/manifest.json");
-    const after = JSON.parse(readFileSync(path.join(repo, ".repo-harness/manifest.json"), "utf8")) as {
+    expect(res.stdout).toContain("written: .iknowkungfu/manifest.json");
+    const after = JSON.parse(readFileSync(path.join(repo, ".iknowkungfu/manifest.json"), "utf8")) as {
       inputsHash: string;
     };
     expect(after.inputsHash).not.toBe(before.inputsHash);
@@ -63,7 +63,7 @@ describe("scan persistence", () => {
     const repo = tempRepo("nextjs-pnpm");
     repos.push(repo);
     writeFileSync(path.join(repo, ".gitignore"), "generated-stuff/\n");
-    const cfgDir = path.join(repo, ".repo-harness");
+    const cfgDir = path.join(repo, ".iknowkungfu");
     rmSync(cfgDir, { recursive: true, force: true });
     await runCli(["scan", "--cwd", repo]);
 

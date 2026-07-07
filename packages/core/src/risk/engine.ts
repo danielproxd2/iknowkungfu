@@ -5,7 +5,7 @@ import {
   type RiskArea,
   type RiskFinding,
   type RiskReport,
-} from "@repo-harness/schemas";
+} from "@iknowkungfu/schemas";
 import { pathInArea } from "../artifacts/context";
 import type { ParsedDiffFile } from "../git";
 import { effectiveRiskAreas } from "./areas";

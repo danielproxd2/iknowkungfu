@@ -66,7 +66,7 @@ export function playbooksArtifact(ctx: DocContext): GeneratedArtifact {
 
   return {
     id: "debugging-playbooks",
-    path: ".repo-harness/docs/DEBUGGING_PLAYBOOKS.md",
+    path: ".iknowkungfu/docs/DEBUGGING_PLAYBOOKS.md",
     blocks,
     ownership: "managed-file",
     lineBudget: BUDGET,

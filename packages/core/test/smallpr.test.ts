@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseConfig } from "@repo-harness/schemas";
-import { buildMap, planSmallPr, scan } from "@repo-harness/core";
+import { parseConfig } from "@iknowkungfu/schemas";
+import { buildMap, planSmallPr, scan } from "@iknowkungfu/core";
 import { fixture } from "./util";
 
 const root = fixture("nextjs-pnpm");
@@ -18,7 +18,7 @@ describe("planSmallPr (template mode)", () => {
     expect(schema!.verify).toContain("pnpm db:generate");
     expect(logic!.verify).toContain("pnpm test tests/lib/cart.test.ts");
     expect(logic!.files).toContain("tests/lib/cart.test.ts");
-    for (const s of plan.steps) expect(s.verify).toContain("repo-harness risk --staged");
+    for (const s of plan.steps) expect(s.verify).toContain("iknowkungfu risk --staged");
   });
 
   it("flags risk areas in the relevant step", () => {
