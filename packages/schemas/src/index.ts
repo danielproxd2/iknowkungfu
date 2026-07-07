@@ -3,3 +3,4 @@ export * from "./manifest";
 export * from "./map";
 export * from "./config";
 export * from "./verification";
+export * from "./risk";
