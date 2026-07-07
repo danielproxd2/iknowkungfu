@@ -7,7 +7,7 @@ Repo Harness scans your repository and precomputes what coding agents otherwise 
 Local-first. Model-agnostic. **Works with zero API keys.**
 
 ```
-$ npx repo-harness init
+$ npx repo-harness-cli init
 
 Repo Harness v0.1.0 — init
 ✔ Detected: nextjs@15.1.0 · react@19.0.0 · vitest@2.1.0 · playwright@1.48.0 · TypeScript 96% · pnpm@9.6.0 · node>=20
@@ -41,7 +41,8 @@ See [DEMO.md](DEMO.md) for the full loop with real captured output.
 ## Install
 
 ```bash
-npm install -g repo-harness    # or one-shot: npx repo-harness init
+npm install -g repo-harness-cli    # or one-shot: npx repo-harness-cli init
+# installs the `repo-harness` and `rh` commands
 ```
 
 Node ≥ 20. macOS / Linux / Windows. No native modules.

@@ -1,5 +1,5 @@
 {
-  "name": "repo-harness",
+  "name": "repo-harness-cli",
   "version": "0.1.0",
   "description": "Turn any repository into an AI-ready workspace: precomputed context, exact commands, verification, and risk guardrails for coding agents.",
   "license": "MIT",
