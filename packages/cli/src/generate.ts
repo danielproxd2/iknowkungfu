@@ -19,7 +19,6 @@ export interface ArtifactWriteReport extends WriteResult {
 export function writeArtifacts(
   root: string,
   artifacts: GeneratedArtifact[],
-  manifestHash: string,
   opts: { dryRun: boolean; force?: boolean },
 ): ArtifactWriteReport[] {
   const reports: ArtifactWriteReport[] = [];
@@ -29,7 +28,7 @@ export function writeArtifacts(
     let refreshed: string[];
     try {
       refreshed = opts.force ? artifact.blocks.map((b) => b.id) : staleBlockIds(existing, artifact);
-      content = mergeArtifact(existing, artifact, manifestHash, { forceBlocks: opts.force });
+      content = mergeArtifact(existing, artifact, { forceBlocks: opts.force });
     } catch (err) {
       if (!(err instanceof BlockCorruptionError)) throw err;
       if (!opts.force) {
@@ -37,7 +36,7 @@ export function writeArtifacts(
       }
       // Repair path: markers are unrecoverable — rebuild the file from scratch.
       refreshed = artifact.blocks.map((b) => b.id);
-      content = mergeArtifact(null, artifact, manifestHash);
+      content = mergeArtifact(null, artifact);
     }
     const result = writeManaged(root, artifact.path, content, { dryRun: opts.dryRun });
     reports.push({

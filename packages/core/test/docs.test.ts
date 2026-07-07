@@ -8,7 +8,7 @@ const manifest = await scan(root, { now: new Date(0) });
 const map = await buildMap(root, manifest);
 const config = parseConfig({});
 const docs = generateDocs("acme-shop", manifest, map, config);
-const rendered = new Map(docs.map((d) => [d.id, mergeArtifact(null, d, manifest.inputsHash)]));
+const rendered = new Map(docs.map((d) => [d.id, mergeArtifact(null, d)]));
 
 const pyRoot = fixture("fastapi-poetry");
 const pyManifest = await scan(pyRoot, { now: new Date(0) });
@@ -29,7 +29,7 @@ describe("full doc set", () => {
 
   it("every doc stays within its line budget on both fixtures", () => {
     for (const doc of [...docs, ...pyDocs]) {
-      const content = mergeArtifact(null, doc, "x");
+      const content = mergeArtifact(null, doc);
       expect(content.split("\n").length, doc.id).toBeLessThanOrEqual(doc.lineBudget);
       expect(doc.warnings, doc.id).toEqual([]);
     }
@@ -83,7 +83,7 @@ describe("full doc set", () => {
     const userConfig = parseConfig({
       riskAreas: [{ id: "payments", paths: ["src/lib/payments/**"], reason: "Stripe integration", rules: [{ kind: "tests-first" }] }],
     });
-    const gr = mergeArtifact(null, generateDocs("acme-shop", manifest, map, userConfig).find((d) => d.id === "refactor-guardrails")!, "x");
+    const gr = mergeArtifact(null, generateDocs("acme-shop", manifest, map, userConfig).find((d) => d.id === "refactor-guardrails")!);
     expect(gr).toContain("Stripe integration");
     expect(gr).not.toContain("money movement (name heuristic)");
   });

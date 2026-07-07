@@ -55,7 +55,7 @@ export function registerAudit(program: Command): void {
           continue;
         }
         try {
-          mergeArtifact(existing, artifact, ctx.manifest.inputsHash); // throws on corrupted markers
+          mergeArtifact(existing, artifact); // throws on corrupted markers
           if (staleBlockIds(existing, artifact).length > 0) {
             findings.push({ check: "staleness", problem: `stale blocks in ${artifact.path}`, fix: "repo-harness refresh" });
           }

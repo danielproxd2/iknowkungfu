@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { riskReportSchema, verificationResultSchema } from "@repo-harness/schemas";
 import { createServer, invalidateStaleCache } from "@repo-harness/mcp";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -51,6 +52,7 @@ describe("MCP action tools", () => {
   it("verify_change catches a real break and reports structured failures", async () => {
     writeFileSync(path.join(repo, "src/calc.mjs"), "export function add(a, b) {\n  return a - b;\n}\n");
     const res = await call(client, "verify_change", { scope: "changed" });
+    verificationResultSchema.parse(res); // response is schema-valid (extra keys stripped)
     expect(res.verdict).toBe("fail");
     const cmds = res.commands as Array<{ command: string; status: string; failures: Array<{ message: string }> }>;
     const failed = cmds.find((c) => c.status === "fail");
@@ -64,6 +66,7 @@ describe("MCP action tools", () => {
     rmSync(path.join(repo, "tests/calc.test.mjs"));
     gitq(["add", "-A"]);
     const res = await call(client, "risk_check_diff", {});
+    riskReportSchema.parse(res);
     expect(res.verdict).toBe("blocked");
     expect((res.findings as Array<{ rule: string }>).map((f) => f.rule)).toContain("test-deleted");
     gitq(["reset", "--hard", "HEAD"]);

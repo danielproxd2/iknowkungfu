@@ -4,6 +4,7 @@
   "description": "Turn any repository into an AI-ready workspace: precomputed context, exact commands, verification, and risk guardrails for coding agents.",
   "license": "MIT",
   "type": "module",
+  "keywords": ["ai", "agents", "mcp", "claude", "codex", "cursor", "copilot", "context", "developer-tools"],
   "bin": {
     "repo-harness": "./dist/index.js",
     "rh": "./dist/index.js"
