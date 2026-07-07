@@ -13,6 +13,7 @@ export {
   blockHash,
   fileHeader,
   mergeArtifact,
+  removeBlock,
   staleBlockIds,
   type ArtifactBlock,
   type GeneratedArtifact,

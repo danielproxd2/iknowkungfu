@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { isManagedPath } from "@repo-harness/core";
 
@@ -27,6 +27,15 @@ export function writeManaged(root: string, rel: string, content: string, opts: {
   if (opts.dryRun) return { path: rel, action: "dry-run" };
   mkdirSync(path.dirname(abs), { recursive: true });
   writeFileSync(abs, content, "utf8");
+  return { path: rel, action: "written" };
+}
+
+export function deleteManaged(root: string, rel: string, opts: { dryRun: boolean }): WriteResult {
+  if (!isManagedPath(rel)) {
+    throw new Error(`internal: attempted delete outside managed paths: ${rel}`);
+  }
+  if (opts.dryRun) return { path: rel, action: "dry-run" };
+  rmSync(path.join(root, ...rel.split("/")), { force: true });
   return { path: rel, action: "written" };
 }
 

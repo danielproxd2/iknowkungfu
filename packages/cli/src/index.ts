@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@repo-harness/core";
+import { registerAdapt } from "./commands/adapt";
 import { registerGenerate } from "./commands/generate";
+import { registerInit } from "./commands/init";
 import { registerScan } from "./commands/scan";
 
 const program = new Command("repo-harness")
@@ -12,8 +14,10 @@ const program = new Command("repo-harness")
   .option("--dry-run", "print planned writes without touching anything")
   .option("--cwd <path>", "run as if started in <path>");
 
+registerInit(program);
 registerScan(program);
 registerGenerate(program);
+registerAdapt(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   const json = process.argv.includes("--json");
