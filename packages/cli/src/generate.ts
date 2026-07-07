@@ -24,17 +24,20 @@ export function writeArtifacts(
 ): ArtifactWriteReport[] {
   const reports: ArtifactWriteReport[] = [];
   for (const artifact of artifacts) {
-    const existing = opts.force ? null : readRepoFile(root, artifact.path);
+    const existing = readRepoFile(root, artifact.path);
     let content: string;
     let refreshed: string[];
     try {
-      refreshed = staleBlockIds(existing, artifact);
-      content = mergeArtifact(existing, artifact, manifestHash);
+      refreshed = opts.force ? artifact.blocks.map((b) => b.id) : staleBlockIds(existing, artifact);
+      content = mergeArtifact(existing, artifact, manifestHash, { forceBlocks: opts.force });
     } catch (err) {
-      if (err instanceof BlockCorruptionError) {
+      if (!(err instanceof BlockCorruptionError)) throw err;
+      if (!opts.force) {
         throw new HarnessError("findings", err.message, `Run with --force to rewrite ${artifact.path} cleanly.`);
       }
-      throw err;
+      // Repair path: markers are unrecoverable — rebuild the file from scratch.
+      refreshed = artifact.blocks.map((b) => b.id);
+      content = mergeArtifact(null, artifact, manifestHash);
     }
     const result = writeManaged(root, artifact.path, content, { dryRun: opts.dryRun });
     reports.push({

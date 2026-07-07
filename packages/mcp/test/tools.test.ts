@@ -47,7 +47,17 @@ beforeAll(async () => {
 describe("MCP read tools", () => {
   it("lists the expected tools and prompts", async () => {
     const tools = (await client.listTools()).tools.map((t) => t.name).sort();
-    expect(tools).toEqual(["explain_file", "find_entrypoints", "find_tests_for_change", "get_commands", "repo_map"]);
+    expect(tools).toEqual([
+      "explain_file",
+      "find_entrypoints",
+      "find_tests_for_change",
+      "get_commands",
+      "plan_small_pr",
+      "refresh_context",
+      "repo_map",
+      "risk_check_diff",
+      "verify_change",
+    ]);
     const prompts = (await client.listPrompts()).prompts.map((p) => p.name).sort();
     expect(prompts).toEqual(["add-feature", "fix-bug", "review-diff"]);
   });

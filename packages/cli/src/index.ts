@@ -4,7 +4,9 @@ import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@repo-harness/core";
 import { registerAdapt } from "./commands/adapt";
 import { registerGenerate } from "./commands/generate";
 import { registerInit } from "./commands/init";
+import { registerAudit } from "./commands/audit";
 import { registerMcp } from "./commands/mcp";
+import { registerRefresh } from "./commands/refresh";
 import { registerRisk } from "./commands/risk";
 import { registerScan } from "./commands/scan";
 import { registerVerify } from "./commands/verify";
@@ -19,7 +21,9 @@ const program = new Command("repo-harness")
 
 registerInit(program);
 registerScan(program);
+registerRefresh(program);
 registerGenerate(program);
+registerAudit(program);
 registerAdapt(program);
 registerVerify(program);
 registerRisk(program);
