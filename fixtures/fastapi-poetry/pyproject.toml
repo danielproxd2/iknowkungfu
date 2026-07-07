@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "fastapi-svc"
+version = "0.1.0"
+description = "demo service"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+uvicorn = "^0.32.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+ruff = "^0.7.0"
+mypy = "^1.13.0"

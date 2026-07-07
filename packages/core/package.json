@@ -1,0 +1,15 @@
+{
+  "name": "@repo-harness/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@repo-harness/schemas": "workspace:*",
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.5",
+    "smol-toml": "^1.4.0"
+  }
+}

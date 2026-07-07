@@ -1,0 +1,32 @@
+{
+  "name": "repo-harness",
+  "version": "0.1.0",
+  "description": "Turn any repository into an AI-ready workspace: precomputed context, exact commands, verification, and risk guardrails for coding agents.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "repo-harness": "./dist/index.js",
+    "rh": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "commander": "^15.0.0",
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.5",
+    "smol-toml": "^1.4.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@repo-harness/core": "workspace:*",
+    "@repo-harness/schemas": "workspace:*",
+    "tsdown": "^0.22.3"
+  }
+}

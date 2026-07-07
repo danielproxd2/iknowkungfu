@@ -1,0 +1,19 @@
+{
+  "name": "repo-harness-monorepo",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm --filter repo-harness build",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm build && vitest run",
+    "test:unit": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  }
+}
