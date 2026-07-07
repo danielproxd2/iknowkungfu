@@ -1,18 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { HARNESS_VERSION } from "@repo-harness/core";
+import { registerActionTools, type ActionToolOptions } from "./action-tools";
 import { registerReadTools } from "./read-tools";
 
 export { invalidateStaleCache } from "./state";
 
-export interface ServerOptions {
-  readonly?: boolean;
-}
+export type ServerOptions = ActionToolOptions;
 
 export function createServer(root: string, opts: ServerOptions = {}): McpServer {
   const server = new McpServer({ name: "repo-harness", version: HARNESS_VERSION });
   registerReadTools(server, root);
-  void opts; // action tools (incl. refresh_context, gated by opts.readonly) land in PR 10
+  registerActionTools(server, root, opts);
   return server;
 }
 

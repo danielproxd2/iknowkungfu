@@ -90,7 +90,12 @@ function freshRender(artifact: GeneratedArtifact, manifestHash: string): string 
  * dropped are removed (managed-file) or left (managed-blocks); new blocks append.
  * Throws BlockCorruptionError on unbalanced markers — callers surface path + fix.
  */
-export function mergeArtifact(existing: string | null, artifact: GeneratedArtifact, manifestHash: string): string {
+export function mergeArtifact(
+  existing: string | null,
+  artifact: GeneratedArtifact,
+  manifestHash: string,
+  opts: { forceBlocks?: boolean } = {},
+): string {
   if (artifact.ownership === "owned-verbatim") return artifact.verbatim ?? "";
   if (existing === null) return freshRender(artifact, manifestHash);
   const segments = parseSegments(artifact.path, existing);
@@ -112,7 +117,8 @@ export function mergeArtifact(existing: string | null, artifact: GeneratedArtifa
       continue; // managed-file: stale block dropped
     }
     emitted.add(seg.id);
-    out.push(seg.inputs === next.inputs ? renderBlock({ ...next, content: seg.lines.join("\n") }) : renderBlock(next));
+    const keepExistingBody = seg.inputs === next.inputs && !opts.forceBlocks;
+    out.push(keepExistingBody ? renderBlock({ ...next, content: seg.lines.join("\n") }) : renderBlock(next));
   }
   for (const b of artifact.blocks) {
     if (!emitted.has(b.id)) out.push(renderBlock(b));

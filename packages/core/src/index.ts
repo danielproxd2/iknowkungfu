@@ -8,6 +8,7 @@ export { buildMap, type BuildMapOptions } from "./graph/build";
 export * from "./artifacts/index";
 export { inferRiskAreas, effectiveRiskAreas } from "./risk/areas";
 export { riskCheck, type RiskContext } from "./risk/engine";
+export { planSmallPr, type PrPlan, type PrStep } from "./plan/smallpr";
 export { changedFiles, parseDiff, requireGitRepo, type ParsedDiffFile } from "./git";
 export { planVerify, type VerifyPlan, type VerifyScope } from "./verify/plan";
 export { runVerify, type RunVerifyOptions } from "./verify/run";

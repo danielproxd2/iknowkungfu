@@ -3,6 +3,7 @@ import path from "node:path";
 import fg from "fast-glob";
 import ignoreFactory from "ignore";
 import { HarnessError } from "./errors";
+import { isManagedPath } from "./managed";
 
 const DEFAULT_EXCLUDES = [
   "**/node_modules/**",
@@ -56,7 +57,8 @@ export async function buildFileIndex(
 
   const sizes = new Map<string, number>();
   for (const e of entries) {
-    if (ig.ignores(e.path)) continue;
+    // Harness output must never feed back into detection, hashing, or the map.
+    if (isManagedPath(e.path) || ig.ignores(e.path)) continue;
     sizes.set(e.path, e.stats?.size ?? 0);
   }
 
