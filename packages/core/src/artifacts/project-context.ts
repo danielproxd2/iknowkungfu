@@ -1,4 +1,5 @@
-import { areasFor, topDependents, warnMark, type DocContext } from "./context";
+import { effectiveRiskAreas } from "../risk/areas";
+import { areasTouchingDir, topDependents, warnMark, type DocContext } from "./context";
 import { blockHash, type ArtifactBlock, type GeneratedArtifact } from "./blocks";
 
 const BUDGET = 150;
@@ -38,9 +39,10 @@ function commandsBlock(ctx: DocContext): ArtifactBlock {
 }
 
 function layoutBlock(ctx: DocContext): ArtifactBlock {
+  const areas = effectiveRiskAreas(ctx.config, ctx.map);
   const topDirs = ctx.map.directories.filter((d) => !d.path.includes("/")).slice(0, 12);
   const lines = topDirs.map((d) => {
-    const marks = areasFor(d.path, ctx.config)
+    const marks = areasTouchingDir(d.path, areas)
       .map((a) => ` ⚠ RISK AREA (${a.id}) — see REFACTOR_GUARDRAILS.md`)
       .join("");
     return `- \`${d.path}/\` — ${d.role.value}${marks}`;
@@ -53,7 +55,7 @@ function layoutBlock(ctx: DocContext): ArtifactBlock {
   ].join("\n");
   return {
     id: "layout",
-    inputs: blockHash({ dirs: topDirs, heavy, risk: ctx.config.riskAreas.map((a) => a.id) }),
+    inputs: blockHash({ dirs: topDirs, heavy, risk: areas.map((a) => a.id) }),
     content,
   };
 }

@@ -16,8 +16,17 @@ export function pathInArea(path: string, area: RiskArea): boolean {
   });
 }
 
-export function areasFor(path: string, config: HarnessConfig): RiskArea[] {
-  return config.riskAreas.filter((a) => pathInArea(path, a));
+export function areasFor(path: string, areas: RiskArea[]): RiskArea[] {
+  return areas.filter((a) => pathInArea(path, a));
+}
+
+/** For directories: match when the dir lies inside an area OR contains one. */
+export function areasTouchingDir(dir: string, areas: RiskArea[]): RiskArea[] {
+  return areas.filter(
+    (a) =>
+      pathInArea(dir, a) ||
+      a.paths.some((glob) => glob.replace(/\/\*\*$/, "").replace(/\/\*$/, "").startsWith(`${dir}/`)),
+  );
 }
 
 export function warnMark(provenance: string): string {
