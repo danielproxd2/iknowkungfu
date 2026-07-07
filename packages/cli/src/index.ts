@@ -4,6 +4,7 @@ import { EXIT_CODES, HARNESS_VERSION, HarnessError } from "@repo-harness/core";
 import { registerAdapt } from "./commands/adapt";
 import { registerGenerate } from "./commands/generate";
 import { registerInit } from "./commands/init";
+import { registerMcp } from "./commands/mcp";
 import { registerRisk } from "./commands/risk";
 import { registerScan } from "./commands/scan";
 import { registerVerify } from "./commands/verify";
@@ -22,6 +23,7 @@ registerGenerate(program);
 registerAdapt(program);
 registerVerify(program);
 registerRisk(program);
+registerMcp(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   const json = process.argv.includes("--json");
