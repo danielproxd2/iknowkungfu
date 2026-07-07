@@ -5,6 +5,7 @@ export { scan, type ScanOptions } from "./scan";
 export { gitCommitCount } from "./gitinfo";
 export { loadConfig, type LoadedConfig, HARNESS_DIR, CONFIG_PATH, MANIFEST_PATH, MAP_PATH, DOCS_DIR } from "./config";
 export { buildMap, type BuildMapOptions } from "./graph/build";
+export * from "./artifacts/index";
 export { nameMatchesSource } from "./graph/testmap";
 export { classifyRole } from "./graph/roles";
 export { computeInputsHash, isTrackedInput } from "./hash";
